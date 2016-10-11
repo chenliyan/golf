@@ -5,8 +5,15 @@
 <input type="file" id="myfile" multiple />
  内容展示：
 <div id="destination" />
+<div id="socket" />
  </body>
 	<script type="text/javascript">
+	var ws = new WebSocket("ws://localhost:8889/websocket");
+	var info = document.getElementById('socket');
+	ws.onopen = function(e){info.innerHTML = e.data;};
+	ws.onclose = function(e){info.innerHTML = e.data;};
+	ws.onmessage = function(e){info.innerHTML = e.data;};
+	ws.onerror = function(e){info.innerHTML = e.data;};
 	document.getElementById('myfile').addEventListener('change', function(){
 		var file = this.files[0];
 		var dest = document.getElementById('destination');
@@ -16,7 +23,7 @@
 			lines = content.split("\n");
 			while (lines.length > 0){
 				line = lines.pop();
-				dest.innerHTML = line;
+				ws.send("upload" + line);
 			}
 		};
 		reader.readAsText(file);

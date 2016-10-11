@@ -26,21 +26,27 @@ ws_establish(Socket) ->
              "sec-websocket-accept: ", Challenge, "\r\n",
              "\r\n",<<>>],
 		gen_tcp:send(Socket, Handshake),
-		send_data(Socket, "yo"),
-		loop(Socket);
+		send_data(Socket, "here could send time"),
+		Pid = spawn(fun() -> agr:init() end),
+		loop(Socket, Pid);
 	_Any ->
 		ws_establish(Socket)
 	end.
-loop(Socket) ->
+loop(Socket, Pid) ->
 	receive
 		{tcp, Socket, Data} ->
 			Text = websocket_data(Data),
 			send_data(Socket, "check"),
-			loop(Socket);
+			Pid ! {self(), Data},
+			io:format("server get data ~s", Data),
+			loop(Socket, Pid);
 		{error, closed} ->
 			ok;
+		{From, Ret} ->
+			send_data(Socket, Ret),
+			loop(Socket, Pid);
 		_Any ->
-			loop(Socket)
+			loop(Socket, Pid)
 	end.
 	
 websocket_data(Data) when is_list(Data) ->
