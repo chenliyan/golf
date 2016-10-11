@@ -1,0 +1,25 @@
+<html>
+  <head>
+ </head>
+ <body>
+<input type="file" id="myfile" multiple />
+ 内容展示：
+<div id="destination" />
+ </body>
+	<script type="text/javascript">
+	document.getElementById('myfile').addEventListener('change', function(){
+		var file = this.files[0];
+		var dest = document.getElementById('destination');
+		var reader = new FileReader();
+		reader.onload = function(e){
+			content = e.target.result;
+			lines = content.split("\n");
+			while (lines.length > 0){
+				line = lines.pop();
+				dest.innerHTML = line;
+			}
+		};
+		reader.readAsText(file);
+	});		
+	</script>
+</html>

@@ -1,0 +1,5 @@
+ServerName yoyoyo
+ServerRoot D:\chenliyan
+Port 8888
+DocumentRoot D:\chenliyan
+ErlScriptAlias /green yo

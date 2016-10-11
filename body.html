@@ -1,0 +1,2612 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-Language" content="zh-cn" />
+<script>
+var domainMain = 'http://www.vmall.com';
+var domainWap = 'http://m.vmall.com';
+var domainCart = 'http://cart.vmall.com';
+var domainRemark = 'http://remark.vmall.com';
+var domainShoppingConfig = 'http://addr.vmall.com';
+var imagePath = 'http://res.vmallres.com/20160920/images';
+var domainAccount = 'http://www.vmall.com';
+var isUseAccount = 'false';
+var upBindPhoneAddr = 'https://hwid1.vmall.com/oauth2/userCenter/bindAccount/bindMobileAccount_1.jsp?lang=zh-cn&amp;themeName=cloudTheme&amp;reqClientType=26';
+var dominWapRecycle ='http://mobile.huishoubao.com/?pid=1056';
+// 修改原因: 原B2C的异步加载规格参数，需要调用PMS提供的接口来获取。
+// 修改说明: 需要将 data-skulist中的数据设置为sbomCode
+// 修改日期：2015/11/18
+// 版本号：BR_VMALL_V100R001C01XB2C1510001_EDP
+// 修改人： cWX320570
+// Add by 陈稳 at 2015/11/18 start
+var pmsHttpDomain = 'http://product.vmall.com/';
+// Add by 陈稳 at 2015/11/18 end
+</script>
+<script>
+(function(){
+	try
+	{
+		cookieGet=function(a){var f=null;if(document.cookie&&document.cookie!=""){var d=document.cookie.split(";");for(var c=0;c<d.length;c++){var b=(d[c]||"").replace(/^(\s|\u00A0)+|(\s|\u00A0)+$/g,"");if(b.substring(0,a.length+1)==(a+"=")){var e=function(i){i=i.replace(/\+/g," ");var h='()<>@,;:\\"/[]?={}';for(var g=0;g<h.length;g++){if(i.indexOf(h.charAt(g))!=-1){if(i.startWith('"')){i=i.substring(1)}if(i.endWith('"')){i=i.substring(0,i.length-1)}break}}return decodeURIComponent(i)};f=e(b.substring(a.length+1));break}}}return f};
+		var uri = location.href;
+			//增加产品详情页判断 
+			var prodReg = /\/\d+\.html/;
+			var isProDetail = prodReg.test(uri);
+			var isHonor = uri.indexOf(".com/honor") >0;
+			var isHuawei = uri.indexOf(".com/huawei")>0;
+			var isRecyle = uri.indexOf(".com/recycle")>0;
+			if (uri == domainMain || uri == (domainMain + "/index.html")
+					|| uri == (domainMain + "/") || isProDetail|| isHonor || isHuawei||isRecyle) {
+				if (/Android|webOS|iPhone|iPad|iPod|BlackBerry/i
+						.test(navigator.userAgent)) {
+					var redirectWap = cookieGet("redirectWap");
+
+					if (!redirectWap == "1" && !isProDetail) {
+						if (isHonor) {
+							window.location.href = domainWap + "/honor";
+						} else if (isHuawei) {
+							window.location.href = domainWap + "/huawei";
+						} else if (isRecyle) {
+							window.location.href = dominWapRecycle;
+						} else {
+							window.location.href = domainWap;
+						}
+					} else if (!redirectWap == "1" && isProDetail) {
+						var wapUri = domainWap
+								+ uri.substring(uri.indexOf("/product"));
+						window.location.href = wapUri;
+					}
+				}
+			}
+	}catch (err){}
+})();
+</script>
+<title>华为商城官网-提供华为手机(荣耀V8、荣耀7、华为P9、荣耀5C、荣耀6Plus、华为Mate8、畅玩5X、荣耀5A等)、平板电脑、移动终端等产品的预约和购买</title>
+<meta name="description" content="华为商城是华为旗下面向全国服务的电子商务平台官网，我们提供正品华为手机(华为P9、华为Mate8、荣耀V8、华为P8、荣耀7、荣耀畅玩5X、荣耀6Plus、荣耀畅玩4C、荣耀X2、荣耀畅玩4X、荣耀4A等)、平板电脑、配件等全新华为产品，品质保证！" />  
+<meta name="keywords" content="华为手机,华为官网,华为,荣耀7,荣耀畅玩5X,荣耀畅玩4C,荣耀6Plus,华为P9" />
+<meta name="mobile-agent" content="format=xhtml;url=http://m.vmall.com/">
+<meta property="wb:webmaster" content="f62bd8cc2f7d9778" />
+<link rel="shortcut icon" href="http://www.vmall.com/favicon.ico" />
+<link href="http://res8.vmallres.com/20160920/css/echannel/ec.core.min.css?20160519" rel="stylesheet" type="text/css">
+
+<link href="http://res8.vmallres.com/20160920/css/echannel/index.min.css?20160309" rel="stylesheet" type="text/css">
+<script src="http://res9.vmallres.com/20160920/js/common/jsapi.js?20141025" namespace="ec"></script>
+<script src="http://res9.vmallres.com/20160920/js/common/base/jquery-1.4.4.min.js"></script>
+<script src="http://res9.vmallres.com/20160920/js/common/ec.core.js?20141025"></script> 
+<script src="http://res9.vmallres.com/20160920/js/echannel/ec.business.js?20160927"></script> 
+<!--[if lt IE 9]><script src="http://res9.vmallres.com/20160920/js/common/html5shiv.js"></script> <![endif]-->
+</head>
+
+
+
+<body class="wide">
+<div class="top-banner" id="top-banner-block"></div>
+<!-- 20130605-qq-彩贝-start -->
+<div class="qq-caibei-bar hide" id="caibeiMsg">
+	<div class="layout">
+		<div class="qq-caibei-bar-tips" id="HeadShow"></div>
+		<div class="qq-caibei-bar-userInfo" id="ShowMsg"></div>
+	</div>
+</div>
+<!-- 20130605-qq-彩贝-end -->
+
+<div class="shortcut">
+    <div class="layout">
+		<div class="s-sub">
+			<ul>
+				<li class="s-hw"><a href="http://consumer.huawei.com/cn/" target="_blank">华为官网</a></li>
+				<li class="s-honor"><a href="http://www.honor.cn/" target="_blank">荣耀官网</a></li>
+				<!--
+				<li class="s-emui"><a href="http://emui.huawei.com/cn/" target="_blank">EMUI</a></li>
+				<li class="s-appstore"><a href="http://appstore.huawei.com/" target="_blank">应用市场</a></li>
+				<li class="s-cloud"><a href="http://cloud.huawei.com/cn/contact" target="_blank">云服务</a></li>
+				<li class="s-developer"><a href="http://developer.huawei.com/" target="_blank">开发者联盟</a></li>
+				-->
+				<li class="s-appsoft">
+					<div class="s-dropdown">
+						<div class="h">
+							<a href="http://emui.huawei.com/appsoft/" target="_blank" >软件应用</a>
+							<s></s>
+						</div>
+						<div class="b">
+							<p><a href="http://emui.huawei.com/cn/" target="_blank">EMUI</a></p>
+							<p><a href="http://appstore.huawei.com/" target="_blank">应用市场</a></p>
+							<p><a href="http://cloud.huawei.com" target="_blank">云服务</a></p>
+							<p><a href="http://developer.huawei.com/" target="_blank">开发者联盟</a></p>
+						</div>
+					</div>	
+					
+				<li class="s-club"><a href="http://club.huawei.com" target="_blank">花粉俱乐部</a></li>
+				<li class="s-sr"><a href="javascript:;" onclick="showSelectRegion()">Select Region</a></li>
+			</ul>
+		</div>
+		<div class="s-main">
+			<ul>
+				<li class="s-login" id="unlogin_status">
+						<script>document.write('<a href="https://hwid1.vmall.com/CAS/remoteLogin?loginChannel=26000000&reqClientType=26&loginUrl=https%3A%2F%2Fhwid1.vmall.com%2FCAS%2Fportal%2Flogin.html&service=http%3A%2F%2Fwww.vmall.com%2Faccount%2Facaslogin%3Furl%3D'+encodeURIComponent(encodeURIComponent(window.location.href))+'" rel="nofollow">登录</a>');</script>
+						&nbsp;&nbsp;&nbsp;<a href="https://hwid1.vmall.com/CAS/portal/userRegister/regbyphone.html?service=http://www.vmall.com/account/caslogin&loginChannel=26000000&reqClientType=26" rel="nofollow">注册</a>
+				</li>
+				<li class="s-user hide" id="login_status">
+					<!--
+						ie6下鼠标悬停追加ClassName： hover
+						示例：[ s-dropdown hover ]
+					-->
+					<div class="s-dropdown">
+						<div class="h">
+							<a href="http://www.vmall.com/member?t=1476075727206timestamp" id="customer_name" rel="nofollow" timeType="timestamp" class="link-user"></a>
+							 <em class="vip-state" id="vip-info">
+								<a class="link-noAct" href="http://www.vmall.com/member/account" id="vip-inActive" title="请完善个人信息，即刻享受会员特权">去激活</a>
+								<a href="http://www.vmall.com/member/point" title="V0" id="vip-Active" ><i class="icon-vip-level-0"></i>&nbsp;</a>
+								<a title="实名认证" id="authentication" href="/authmember/accesstoken"></a>
+							</em>
+							<s></s>
+						</div>
+						<div class="b">
+							<p><a href="https://hwid1.vmall.com/oauth2/userCenter/hwAccount?reqClientType=26&loginChannel=26000000&themeName=cloudTheme" target="_blank" id="user-center">我的华为帐号</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="http://www.vmall.com/account/logout">退出</a></p>
+						</div>
+					</div>
+				</li>
+				<li class="s-myOrders">
+					<a href="http://www.vmall.com/member/order?t=1476075727207timestamp" rel="nofollow" timeType="timestamp">我的订单</a>
+				</li>
+				<li class="s-promo"><a href="http://www.vmall.com/priority" rel="nofollow">V码(优购码)</a></li>
+				<li class="s-hwep hide" id="preferential"></li>
+				<li class="s-mobile"><a href="http://www.vmall.com/appdownload" target="_blank">手机版</a></li>
+				<li class="s-sitemap">
+					<div class="s-dropdown ">
+						<div class="h">
+							<a href="javascript:;">网站导航</a>
+							<s></s>
+						</div>
+						<div class="b">
+							<p><a href="http://www.vmall.com/help/index.html">帮助中心</a></p>
+							<p><a href="http://consumer.huawei.com/minisite/HiSuite_cn/" target="_blank">PC软件</a></p>
+							<p><a href="http://vmall.118100.cn" target="_blank">数字音乐</a></p>
+							<p><a href="http://www.hwtrip.com/" target="_blank">爱旅</a></p>
+							<p><a href="http://dbank.vmall.com/" target="_blank">华为网盘</a></p>
+						</div>
+					</div>
+				</li>
+			</ul>
+		</div>
+    </div>
+</div>
+
+<textarea id="selectRegion-tips" style="display: none;">
+<!-- 20151105-全球语言弹出框-width:910px-start -->
+<div class="box-content"><div class="box-lan-choose"><dl><dt>Asia Pacific</dt><dd class="box-button"><a class="box-choose" href="http://www.vmall.hk/">香港</a><a class="box-choose" href="https://store.hihonor.com/in/?utm_source=vmall&amp;utm_medium=navigation&amp;utm_campaign=daily">India</a><a class="box-choose" href="http://www.vmall.my/">Malaysia</a></dd></dl><dl class="box-lan-choose-area"><dt>The United States and Latin America</dt><dd class="box-button"><a class="box-choose" href="https://store.hihonor.com/us">United States</a><a class="box-choose" href="http://www.honor.mx/">México</a></dd></dl><dl class="box-lan-choose-area"><dt>Europe</dt><dd class="box-button"><a class="box-choose" href="http://www.vmall.ru/">Россия</a><a class="box-choose" href="https://www.vmall.eu/be/">België</a><a class="box-choose" href="https://www.vmall.eu/fr/">France</a><a class="box-choose" href="https://www.vmall.eu/de/">Deutschland</a><a class="box-choose" href="https://www.vmall.eu/it/">Italia</a><a class="box-choose" href="https://www.vmall.eu/nl/">Nederland</a><a class="box-choose" href="https://www.vmall.eu/pt/">Portugal</a><a class="box-choose" href="https://www.vmall.eu/es/">España</a><a class="box-choose" href="https://www.vmall.eu/ch/">Schweiz</a><a class="box-choose" href="https://www.vmall.eu/uk/">UK</a></dd></dl><dl class="box-lan-choose-area"><dt>Middle East</dt><dd class="box-button"><a href="http://www.vmall.hk/" target="_self" textvalue="Saudi Arabia"></a><a class="box-choose" href="http://www.honorarabia.com/uae/">United Arab Emirates</a><a class="box-choose" href="http://www.honorarabia.com/ksa/">Saudi Arabia</a></dd></dl></div></div>
+<!-- 20151105-全球语言弹出框-width:910px-end -->					
+</textarea>
+<script src="http://res9.vmallres.com/20160920/js/echannel/base.min.js?20151008"></script>
+<script>
+ec.mediaPath = "http://res.vmallres.com/pimages/";
+//document.write('<script src="/account/status?'+(new Date()).getTime()+'"></s' + 'cript>');
+</script>
+<script>
+ec.load("ec.box" , {loadType : "lazy"});
+/**
+*功能：给鼠标移动到s-dropdown上面的时候，记得给他多添加一个hover类样式
+*目的是兼容ie6
+*@author 李峰
+*/
+$(function(){
+	$(".s-dropdown").hover(function(){
+		$(this).addClass("hover");
+	},function(){
+		$(this).removeClass("hover");
+	});
+	var maxcolor=$('.top-banner-max').find('p').children('a').css("background-color");
+	var mincolor=$('.top-banner-min').find('p').children('a').css("background-color");
+	
+	$('.top-banner-max').css({"background-color":maxcolor,overflow:"hidden"});
+	$('.top-banner-min').css({"background-color":mincolor,overflow:"hidden"});
+});
+
+//显示全球导航选择层
+function showSelectRegion()
+{
+    var box = new ec.box($("#selectRegion-tips").val(),{
+			boxid : "region-select-box",
+			boxclass : "ol_box_4",
+			title : "Please select your country or region.",
+			width : 940,			
+			showButton : false,
+			autoPosition:false,
+			onopen: function(box){
+			},
+			onok : function(box){
+			},
+			oncancel : function(box){
+				box.close();
+				$(".ol_box_mask").remove();
+			},   
+			onclose : function(box){
+				$(".ol_box_mask").remove();
+			}
+		});	
+								
+		box.open();
+				
+				$(".box-title").css("font-size","28px").css("font-weight","normal");
+				$("#region-select-box").css("height","auto");				
+				$(".ol_box_mask").click(function(){box.close();});
+				
+				$(".box-header").unbind("mousemove");
+				$(".box-header").unbind("mousedown");
+				
+				var divTop=document.getElementById("region-select-box").offsetTop;
+				$("#region-select-box").mousedown(function (e) {
+					var e=e||window.event;
+					var region = document.getElementById("region-select-box");
+										
+					var leftX = e.clientX - region.offsetLeft;
+					var topY = e.clientY - region.offsetTop;
+					$("#region-select-box").mousemove(function (event) {
+					 var e=event||window.event;
+					  var left=	e.clientX - leftX;
+					  var top=e.clientY - topY;
+					   
+					  if(e.clientX - leftX<20-region.offsetWidth){
+					  left=20-region.offsetWidth;
+					  }
+					  if(e.clientY - topY<20-region.offsetHeight){
+					  top=20-region.offsetHeight;
+					  }	
+					 
+					 if(e.clientY - topY+20>=$(window).height()){
+					  top=$(window).height() - 20;
+					  }
+					  if(e.clientX - leftX+20>=$(window).width()){
+					  left=$(window).width() - 20;
+					  }
+					  $("#region-select-box").css({"left": left, "top": top});
+					  divTop=top;
+						
+					});
+				});
+				$("#region-select-box").mouseup(function () {
+				$("#region-select-box").unbind("mousemove");
+				});
+            $(window).scroll(function () {              
+                $("#region-select-box").offset({ top: divTop });
+            });	
+}
+
+</script>
+<header class="header">
+	<div class="layout">
+		<!-- 21030909-logo-start -->
+		<div class="logo logo-index"><a href="/index.html" title="Vmall.com - 华为商城"><img src="http://res.vmallres.com/images/echannel/newLogo.png" alt="Vmall.com - 华为商城"/></a></div><!-- 21030909-logo-start -->
+		<!-- 20130909-搜索条-焦点为search-form增加className:hover -start -->
+		<div class="searchBar relative">
+			<!-- 页头热门搜索 -->
+			<div class="searchBar-form" id="searchBar-area">
+				<form method="get" onsubmit="return search(this)">					
+					<input type="text" class="text" maxlength="100" id="search-kw" /><input type="submit" class="button" value="搜索" />
+					<input type="hidden" id="default-search" value="荣耀8"/>
+				</form>
+			</div>
+				<div class="searchBar-key">
+		<a href="/search?keyword=HUAWEI&#x20;nova" target="_blank">HUAWEI&#x20;nova</a>
+		<a href="/search?keyword=&#x8363;&#x8000;8" target="_blank">&#x8363;&#x8000;8</a>
+		<a href="/search?keyword=5A" target="_blank">5A</a>
+		<a href="/search?keyword=P9" target="_blank">P9</a>
+		<a href="/search?keyword=&#x7545;&#x73a9;5" target="_blank">&#x7545;&#x73a9;5</a>
+</div>
+			
+		</div><!-- 20130909-搜索条-end -->
+		<!-- 21030910-头部-工具栏-start -->
+		<div class="header-toolbar">
+			<!-- 21030910-头部-工具栏-焦点为header-toolbar-item增加ClassName:hover -->
+			<div class="header-toolbar-item" id="header-toolbar-imall">
+				<!-- 21030909-我的商城-start -->
+				<div class="i-mall">
+					<div class="h"><a href="/member?t=1476075727207timestamp" rel="nofollow" timeType="timestamp">我的商城</a>
+					<i></i><s></s><u></u></div>
+					<div class="b" id="header-toolbar-imall-content">
+						<div class="i-mall-prompt" id="cart_unlogin_info">
+							<p>你好，请&nbsp;&nbsp;<script>document.write('<a href="/account/login?url='+encodeURIComponent(window.location.pathname)+'"  rel="nofollow">登录</a>');</script> | <a href="/account/register" rel="nofollow">注册</a></p>
+						</div>
+						<div class="i-mall-uc " id="cart_login_info">
+							<ul>
+								<li><a href="http://www.vmall.com/member/order?t=1476075727207timestamp" rel="nofollow" timeType="timestamp">我的订单</a></li>
+								<li><a href="/member/order?t=1476075727207timestamp&tab=unpaid" timeType="timestamp">待支付</a><span id="toolbar-orderWaitingHandleCount" class="hide">0</span></li>
+								<li><a href="/member/order?t=1476075727207timestamp&tab=nocomment" timeType="timestamp">待评论</a><span id="toolbar-notRemarkCount" class="hide">0</span></li>
+								<li><a href="/member/coupon?t=1476075727207timestamp" timeType="timestamp">优惠券</a><span id="toolbar-couponCount" class="hide">0</span></li>
+								<li><a href="/member/msg?t=1476075727207timestamp" timeType="timestamp">站内信</a><span id="toolbar-newMsgCount" class="hide">0</span></li>
+							</ul>
+						</div>
+						<!-- 页头会员专享信息 -->
+						<div class="i-mall-event " >
+							<p><a href="http://www.vmall.com/notice-657"><img src="http://res.vmallres.com/pimages//sale/2016-01/20160127095348354.jpg" alt="特权频道" /></a></p>
+						</div>
+					</div>
+				</div><!-- 21030909-我的商城-end -->
+			</div>
+			<div class="header-toolbar-item" id="header-toolbar-minicart">
+				<!-- 21030909-迷你购物车-start -->
+				<div class="minicart">
+					<div class="h" id="header-toolbar-minicart-h"><a href="http://cart.vmall.com/cart/cart.html?t=1476075727207timestamp" rel="nofollow" timeType="timestamp">我的购物车<span><em id="header-cart-total">0</em><b></b></span></a><i></i><s></s><u></u></div>
+					<div class="b" id="header-toolbar-minicart-content">
+						<div class="minicart-pro-empty" id="minicart-pro-empty">
+							<span class="icon-minicart">您的购物车是空的，赶紧选购吧！</span>
+						</div>
+						<div id="minicart-pro-list-block">
+						<ul class="minicart-pro-list" id="minicart-pro-list">
+														
+						</ul>
+						</div>
+						<div class="minicart-pro-settleup" id="minicart-pro-settleup">
+							<p>共<em id="micro-cart-total">0</em>件商品，金额合计<b id="micro-cart-totalPrice">&yen;&nbsp;0</b></p>
+							<a class="button-minicart-settleup" href="http://cart.vmall.com/cart/cart.html">去结算</a>
+						</div>
+					</div>
+				</div><!-- 21030909-迷你购物车-end -->
+			</div>
+			
+		</div><!-- 21030910-头部-工具栏-start -->
+		<!-- 20140910-头部-二维码-start -->
+		<div class="header-qrcode">
+			<div class="ec-slider" id="ec-erweima">
+				<ul class="ec-slider-list">
+					<li class="ec-slider-item">
+						<p><a href="http://www.vmall.com/appdownload" target="blank" title="专享周三无线专场"><img src="http://res.vmallres.com/appdownload/home/qrcode_vmall_app01.png?20160114" alt="华为商城官方客户端"/></a></p>
+						<p><a href="http://www.vmall.com/appdownload" target="blank"><span>专享周三无线专场</span></a></p>
+					</li>
+					<li class="ec-slider-item">
+						<p><a href="http://www.vmall.com/appdownload" target="blank" title="微信扫码关注我们"><img src="http://res.vmallres.com/appdownload/home/qrcode_vmall_wechat01.jpg?20160114" alt="华为商城官方微信"/></a></p>
+						<p><a href="http://www.vmall.com/appdownload" target="blank"><span>微信扫码关注我们</span></a></p>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<!-- 20140910-头部-二维码-end -->
+	</div>			
+</header><!-- 21030909-头部-end -->
+
+
+<textarea id="micro-cart-tpl" class="hide">
+<!--#macro microCartList data-->
+	
+	<!--#list data.bundlerList as b-->
+		<!--#if (b.skuList && b.skuList.length > 0) -->
+		<!--#var lst = b.skuList[0];-->
+		<!--#var skuId='#'+lst.skuId;-->
+		<li class="minicart-pro-item">
+			<div class="pro-info">
+				<div class="p-img"><a href="/product/{#lst.id}.html{#skuId}" title="" target="_blank"><img src="http://res.vmallres.com/pimages/{#lst.photoPath}78_78_{#lst.photoName}" alt="{#lst.prdSkuName}" /></a></div>
+				<div class="p-name"><a href="/product/{#lst.id}.html{#skuId}" title="{#lst.prdSkuName}" target="_blank">{#lst.prdSkuName}&nbsp;<span class="p-slogan">{#lst.skuPromWord}</span><span class="p-promotions hide"></span></a></div>
+				<div class="p-status">
+					<div class="p-price"><b>&yen;&nbsp;{#parseFloat(lst.skuPrice).toFixed(2)}</b><em>x</em><span>{#b.quantity*lst.quantity}</span></div>
+					<div class="p-tags">
+						<span class="p-mini-tag-suit">套装</span>
+						<span class="p-mini-tag-sale">惠</span>
+						<!--#if (lst.giftList && lst.giftList.length > 0)--><span class="p-mini-tag-gift">配</span><!--/#if-->
+						<!--#if (lst.extendList && lst.extendList.length > 0)--><span class="p-mini-tag-extend">延保</span><!--/#if-->
+					</div>
+				</div>
+				<a href="javascript:;" class="icon-minicart-del" title="删除" onclick="ec.minicart.del(this , {#b.bundleId}, {#b.productType})">删除</a>
+			</div>
+		</li>
+		<!--/#if-->
+	<!--/#list-->
+	<!--#list data.productList as lst-->
+	<!--#var skuId='#'+lst.skuId;-->
+	<li class="minicart-pro-item">
+		<div class="pro-info">
+			<div class="p-img"><a href="/product/{#lst.id}.html{#skuId}" title="" target="_blank"><img src="http://res.vmallres.com/pimages/{#lst.photoPath}78_78_{#lst.photoName}" alt="{#lst.prdSkuName}" /></a></div>
+			<div class="p-name"><a href="/product/{#lst.id}.html{#skuId}" title="{#lst.prdSkuName}" target="_blank">{#lst.prdSkuName}&nbsp;<span class="p-slogan">{#lst.skuPromWord}</span><span class="p-promotions hide"></span></a></div>
+			<div class="p-status">
+				<div class="p-price"><b>&yen;&nbsp;{#parseFloat(lst.skuPrice).toFixed(2)}</b><em>x</em><span>{#lst.quantity}</span></div>
+				<div class="p-tags">
+					<!--#if (lst.campaignInfoList && lst.campaignInfoList.length > 0)--><span class="p-mini-tag-sale">惠</span><!--/#if-->
+					<!--#if (lst.giftList && lst.giftList.length > 0)--><span class="p-mini-tag-gift">配</span><!--/#if-->
+					<!--#if (lst.extendList && lst.extendList.length > 0)--><span class="p-mini-tag-extend">延保</span><!--/#if-->
+				</div>
+			</div>
+			<a href="javascript:;" class="icon-minicart-del" title="删除" onclick="ec.minicart.del(this , {#lst.skuId}, {#lst.productType})">删除</a>
+		</div>
+	</li>
+	<!--/#list-->
+<!--/#macro-->
+</textarea>
+
+<script>
+ec.load("ec.slider", {
+   loadType : "lazy", 
+   callback : function() {
+		$("#ec-erweima").slider({
+				 width:     91, //必须
+				 height:     96, //必须
+				 style : 1,                    //1显示分页，2只显示左右箭头,3两者都显示
+				 pause : 120000,           //间隔时间
+				 auto : true
+
+		});
+   }
+});
+ec.ready(function(){
+	//ec.form.input.label("#search-kw" , "荣耀8");
+	$("#search-kw").bind(
+		{
+			focus:function(){
+				$(".searchBar-key").css("display","none");
+			}
+		});
+	$("#search-kw").bind(	
+		{	blur:function(){
+				if ($("#search-kw").val().trim() == '') {
+					$(".searchBar-key").css("display","block");
+				} else {
+					$(".searchBar-key").css("display","none");
+				}
+			}
+		}
+	);
+	ec.ui.hover("#searchBar-area" , { captureInput : true });
+});
+ec.code.addService({showService : true , showTools : true});
+
+ec.ready(function () {
+	ec.cart.getTotal();
+	//微型购物车hover效果
+	ec.minicart.microCartTpl = new ec.template($('#micro-cart-tpl').val());
+	var $imall = $('#header-toolbar-imall-content'),
+		$miniCart = $('#header-toolbar-minicart-content');
+	$('#header-toolbar-imall').hover(function (){
+		$.ajax({
+			url : "http://remark.vmall.com/remark/queryNotRemarkCount.json?t=" + new Date().getTime(),
+			dataType:"jsonp",
+			success : function(json){
+				$('#toolbar-notRemarkCount').html(+json.notRemarkCount).attr('class',(json.notRemarkCount <= 0) ? 'hide' : '');
+				$('#member-notRemarkCount').text(json.notRemarkCount);
+			}
+		});
+		//
+		//ec.cart.getTotal();
+		
+		$imall.show();
+	}, function () {
+		$imall.hide();
+	});
+	$('#header-toolbar-minicart').hover(function (){
+		$(this).unbind("mouseenter");
+		ec.cart.getTotal();
+		$miniCart.show();
+	}, function () {
+		$(this).bind("mouseenter",function(){
+		$(this).unbind("mouseenter");
+		ec.cart.getTotal();
+		$miniCart.show();
+		})
+		$miniCart.hide();
+	});
+});
+
+$("#getPetal").click(function()
+{
+	window.location.href="/member/petal";
+});
+
+ec.ready(function(){
+	try
+	{	
+			new ec.ajax().get({		
+			url:"/account/getPetalValid.json",
+			successFunction:function(json){		
+				//如果没有签到
+				if(!json.success)
+				{
+					//判断用户是否已签到
+					new ec.ajax().get({		
+						url:"/account/signinValid.json",
+						successFunction:function(json){		
+							//如果没有签到
+							if(!json.success)
+							{
+								$("#dfn").show();
+							}
+							else//如果已经签到
+							{
+								$("#dfn").hide();
+							}
+					},
+						errorFunction : function(json) {
+							// alert(json);
+						}
+					});
+				
+				}
+				else
+				{
+					$("#dfn").hide();
+				}
+			},
+			errorFunction : function(json) {
+				//alert(json);
+			}
+		});
+		
+	}
+	catch (err)
+	{
+		// console.log(err);
+	}
+});
+
+
+</script>
+<textarea class="hide" id="ec-binding-phone">
+	<div id="ec-binding-phone-1" class="ec-binding-phone-box hide">
+		<!-- 20141011-绑定安全手机号提示-start -->
+		<div class="safetyPhone-prompt-area">
+			<div class="h">
+				<i></i>
+			</div>
+			<div class="b">
+				<p>为了给您提供更好的服务，建议您将登录的邮箱帐号进行手机号码绑定，绑定后邮箱帐号和绑定的手机号码都可以作为登录帐号，<em style="font-color:red;">不绑定将不能提交订单。</em></p>
+			</div>
+		</div>
+		<div class="box-custom-button">
+			<a class="box-button-style-3" href="javascript:;" id="ec-binding-phone-url-1"><span>立即绑定</span></a></a>
+		</div>
+		<!-- 20141011-绑定安全手机号提示-end -->
+	</div>
+	<div id="ec-binding-phone-2" class="ec-binding-phone-box hide">
+		<!-- 20141424-绑定安全手机号提示-start -->
+		<div class="safetyPhone-prompt-area">
+			<div class="h">
+				<i></i>
+			</div>
+			<div class="b">
+				<p>请您在新打开的页面中完成绑定安全手机号操作。</p>
+				<p>完成绑定后请根据您的情况点击下面的按钮。</p>
+			</div>
+		</div>
+		<div class="box-custom-button">
+			<a class="box-button-style-3" href="javascript:;" onclick="ec.binding.resetShow()"><span>绑定成功</span></a><a class="box-change box-button-style-3" href="javascript:;" id="ec-binding-phone-url-2"><span>重新绑定</span></a>
+		</div>
+		<!-- 20141424-绑定安全手机号提示-end -->
+	</div>
+	<div id="ec-binding-phone-3" class="ec-binding-phone-box hide">
+		<!-- 20141424-安全手机号绑定提示失败-start -->
+		<div class="box-prompt-error-area">
+			<div class="h">
+				<i></i>
+			</div>
+			<div class="b">
+				<p class="tal f12">对不起，您未成功绑定手机号。</p>
+				<p class="tal f12 black">为了您在商城正常购物、保护您的权益，请您绑定一个手机号码以享受华为商城的所有服务。</p>
+			</div>
+		</div>
+		<div class="box-custom-button">
+			<a href="javascript:;" class="box-button-style-3" onclick="ec.binding.showOk()" id="ec-binding-phone-url-3" ><span>立即绑定</span></a>
+		</div>
+		<!-- 20141424-安全手机号绑定提示失败-end -->
+	</div>
+	<div id="ec-binding-phone-4" class="ec-binding-phone-box hide">
+		<!-- 20150824-手机号绑定未绑定-start -->
+		<div class="safetyPhone-prompt-area">
+			<div class="h">
+				<i></i>
+			</div>
+			<div class="b">
+				<p class="tal f12">为了给您提供更好的服务，建议您将登录的邮箱帐号进行手机号码绑定，绑定后邮箱帐号和绑定的手机号码都可以作为登录帐号；<em style="font-color:red;">自</em><em id="bindEndDate4State4" style="font-color:red;"></em><em style="font-color:red;">号起，若不绑定将不能提交订单。</em></p>
+			</div>
+		</div>
+		<div>&nbsp;</div>
+		<div class="box-custom-button">
+			<a class="box-change box-button-style-3" href="javascript:;" id="ec-binding-phone-url-4"><span>立即绑定</span></a>
+			<a class="box-button-style-1" href="javascript:;" onclick="ec.binding.closeState4();"><span>下次再说</span></a>
+		</div>
+		<!-- 20150824-安全手机号绑定提示失败-end -->
+	</div>
+	<div id="ec-binding-phone-5" class="ec-binding-phone-box hide">
+		<!-- 20141424-安全手机号绑定提示失败-start -->
+		<div class="box-prompt-error-area">
+			<div class="h">
+				<i></i>
+			</div>
+			<div class="a">
+				<p class="tal f12">您输入的手机已被注册，您可以选择使用手机号重新登录或者重新绑定手机！</p>
+			</div>
+		</div>
+		<div>&nbsp;</div>
+		<div class="box-custom-button">
+			<a class="box-button-style-3" href="http://www.vmall.com/account/login" id="ec-binding-phone-reLogin-5"><span>重新登录</span></a>')
+			<a class="box-change box-button-style-3" href="javascript:;" id="ec-binding-phone-url-5"><span>重新绑定</span></a>
+		</div>
+		<!-- 20141424-安全手机号绑定提示失败-end -->
+	</div>
+</textarea><!-- 导航 -->
+<div class="naver-main">
+	<div class="layout">
+		<!-- 20140823-分类-start -->
+		<div class="category category-index" id="category-block">
+			<!-- 20140822-分类-start -->
+	<div class="h">
+		<h2>全部商品</h2>
+		<i class="icon-category"></i>
+	</div>
+	<div class="b">
+		<ol class="category-list">
+			<!-- 鼠标悬停增加ClassName： hover -->
+							<li class="category-item ">
+					<div class="category-info">
+						<h3>
+							<a href="/list-36" target="_blank"><span>手机
+													</span></a></h3>
+								<a href="/list-75" ><span>荣耀
+																</span></a>
+								<a href="/list-77" target="_blank"><span>畅玩
+																</span></a>
+								<a href="/list-76" target="_blank"><span>华为 Mate/P系列
+																</span></a>
+					</div>
+					
+						
+						
+								<div class="category-panels children-col-2">
+												<ul class="subcate-list children-col-list">
+											<li class="subcate-item">
+												<a href="/list-75" >
+													<span>荣耀
+																											</span>
+												</a>
+											</li>
+											<li class="subcate-item">
+												<a href="/list-77" target="_blank">
+													<span>畅玩
+																											</span>
+												</a>
+											</li>
+											<li class="subcate-item">
+												<a href="/list-76" target="_blank">
+													<span>华为 Mate/P系列
+																											</span>
+												</a>
+											</li>
+											<li class="subcate-item">
+												<a href="/list-277" >
+													<span>华为 nova系列
+																											</span>
+												</a>
+											</li>
+											<li class="subcate-item">
+												<a href="/list-81" target="_blank">
+													<span>华为 G系列
+																											</span>
+												</a>
+											</li>
+											<li class="subcate-item">
+												<a href="/list-275" >
+													<span>华为 畅享系列
+																											</span>
+												</a>
+											</li>
+											<li class="subcate-item">
+												<a href="/list-38" target="_blank">
+													<span>合约机
+																											</span>
+												</a>
+											</li>
+									</ul>
+									<ul class="subcate-list children-col-list">
+								<dl class="category-banner children-col-2">
+									<dt><span>推荐商品</span></dt>
+											<dd><a href="http://www.vmall.com/recycle?url=%3Fpid%3D1032" target="_blank">以旧换新
+																							</a></dd>
+											<dd><a href="http://www.vmall.com/product/701252243.html" >荣耀 NOTE 8
+																							</a></dd>
+											<dd><a href="http://www.vmall.com/product/2647.html" target="_blank">华为 Mate 8
+																							</a></dd>
+											<dd><a href="http://www.vmall.com/product/2519.html" target="_blank">荣耀畅玩5X
+																							</a></dd>
+								</dl>
+								</ul>
+						</div>
+				</li>
+				<li class="category-item odd">
+					<div class="category-info">
+						<h3>
+							<a href="/list-40" target="_blank"><span>笔记本 &amp; 平板
+													</span></a></h3>
+								<a href="/list-41" target="_blank"><span>平板电脑
+																</span></a>
+								<a href="/list-42" ><span>MateBook
+								<s><img src="http://res.vmallres.com/images/echannel/icon/hot2.png" alt="hot" /></s>
+																</span></a>
+								<a href="/list-85" target="_blank"><span>扩展坞
+																</span></a>
+					</div>
+					
+						
+						
+								<div class="category-panels children-col-1">
+												<ul class="subcate-list children-col-list">
+											<li class="subcate-item">
+												<a href="/list-41" target="_blank">
+													<span>平板电脑
+																											</span>
+												</a>
+											</li>
+											<li class="subcate-item">
+												<a href="/list-42" >
+													<span>MateBook
+														<s><img src="http://res.vmallres.com/images/echannel/icon/hot2.png" alt="hot" /></s>
+																											</span>
+												</a>
+											</li>
+											<li class="subcate-item">
+												<a href="/list-85" target="_blank">
+													<span>扩展坞
+																											</span>
+												</a>
+											</li>
+											<li class="subcate-item">
+												<a href="/list-271" target="_blank">
+													<span>触控笔
+																											</span>
+												</a>
+											</li>
+											<li class="subcate-item">
+												<a href="/list-273" target="_blank">
+													<span>二合一键盘
+																											</span>
+												</a>
+											</li>
+								<dl class="category-banner children-col-2">
+									<dt><span>推荐商品</span></dt>
+											<dd><a href="http://www.vmall.com/product/1350.html" target="_blank">荣耀平板
+																							</a></dd>
+											<dd><a href="http://www.vmall.com/product/2642.html" target="_blank">HUAWEI WATCH
+																							</a></dd>
+											<dd><a href="http://www.vmall.com/product/2323.html#4989,42" target="_blank">荣耀手环zero
+																							</a></dd>
+								</dl>
+								</ul>
+						</div>
+				</li>
+				<li class="category-item ">
+					<div class="category-info">
+						<h3>
+							<a href="/list-59" ><span>穿戴
+													</span></a></h3>
+								<a href="/list-247" target="_blank"><span>手表
+																</span></a>
+								<a href="/list-241" ><span>手环
+								<s><img src="http://res.vmallres.com/images/echannel/icon/hot2.png" alt="hot" /></s>
+																</span></a>
+					</div>
+					
+						
+						
+								<div class="category-panels children-col-1">
+												<ul class="subcate-list children-col-list">
+											<li class="subcate-item">
+												<a href="/list-247" target="_blank">
+													<span>手表
+																											</span>
+												</a>
+											</li>
+											<li class="subcate-item">
+												<a href="/list-241" >
+													<span>手环
+														<s><img src="http://res.vmallres.com/images/echannel/icon/hot2.png" alt="hot" /></s>
+																											</span>
+												</a>
+											</li>
+						</div>
+				</li>
+				<li class="category-item odd">
+					<div class="category-info">
+						<h3>
+							<a href="/list-43" ><span>智能家居
+													</span></a></h3>
+								<a href="/list-263" target="_blank"><span>子母路由
+																</span></a>
+								<a href="/list-46" target="_blank"><span>电视盒子
+																</span></a>
+								<a href="/list-45" target="_blank"><span>路由器
+																</span></a>
+					</div>
+					
+						
+						
+								<div class="category-panels children-col-1">
+												<ul class="subcate-list children-col-list">
+											<li class="subcate-item">
+												<a href="/list-263" target="_blank">
+													<span>子母路由
+																											</span>
+												</a>
+											</li>
+											<li class="subcate-item">
+												<a href="/list-46" target="_blank">
+													<span>电视盒子
+																											</span>
+												</a>
+											</li>
+											<li class="subcate-item">
+												<a href="/list-45" target="_blank">
+													<span>路由器
+																											</span>
+												</a>
+											</li>
+											<li class="subcate-item">
+												<a href="/list-44" target="_blank">
+													<span>电力猫
+																											</span>
+												</a>
+											</li>
+											<li class="subcate-item">
+												<a href="/list-97" target="_blank">
+													<span>随行wifi
+																											</span>
+												</a>
+											</li>
+								<dl class="category-banner children-col-2">
+									<dt><span>推荐商品</span></dt>
+											<dd><a href="http://www.vmall.com/product/73559414.html" >荣耀路由Pro 游戏版
+																							</a></dd>
+											<dd><a href="http://www.vmall.com/product/468783562.html" >荣耀盒子Pro
+																							</a></dd>
+											<dd><a href="http://www.vmall.com/product/1822.html#3463" target="_blank">荣耀路由
+																							</a></dd>
+								</dl>
+								</ul>
+						</div>
+				</li>
+				<li class="category-item ">
+					<div class="category-info">
+						<h3>
+							<a href="/list-47" target="_blank"><span>专属配件
+													</span></a></h3>
+								<a href="/list-48" target="_blank"><span>保护壳
+																</span></a>
+								<a href="/list-49" target="_blank"><span>保护套
+																</span></a>
+								<a href="/list-50" target="_blank"><span>贴膜
+																</span></a>
+					</div>
+					
+						
+						
+								<div class="category-panels children-col-1">
+												<ul class="subcate-list children-col-list">
+											<li class="subcate-item">
+												<a href="/list-48" target="_blank">
+													<span>保护壳
+																											</span>
+												</a>
+											</li>
+											<li class="subcate-item">
+												<a href="/list-49" target="_blank">
+													<span>保护套
+																											</span>
+												</a>
+											</li>
+											<li class="subcate-item">
+												<a href="/list-50" target="_blank">
+													<span>贴膜
+																											</span>
+												</a>
+											</li>
+											<li class="subcate-item">
+												<a href="/list-223" >
+													<span>盒子专属配件
+																											</span>
+												</a>
+											</li>
+											<li class="subcate-item">
+												<a href="/list-225" target="_blank">
+													<span>表带
+																											</span>
+												</a>
+											</li>
+											<li class="subcate-item">
+												<a href="/list-227" target="_blank">
+													<span>电容笔
+																											</span>
+												</a>
+											</li>
+								<dl class="category-banner children-col-2">
+									<dt><span>推荐商品</span></dt>
+											<dd><a href="http://www.vmall.com/product/2699.html" >荣耀 圈铁耳机
+																							</a></dd>
+											<dd><a href="http://www.vmall.com/product/2205.html#4519" >荣耀小口哨
+																							</a></dd>
+											<dd><a href="http://www.vmall.com/product/1337.html#2303,51" >耐翔 蜂巢 蓝牙耳机
+																							</a></dd>
+								</dl>
+								</ul>
+						</div>
+				</li>
+				<li class="category-item odd">
+					<div class="category-info">
+						<h3>
+							<a href="/list-54" target="_blank"><span>通用配件
+													</span></a></h3>
+								<a href="/list-229" ><span>耳机
+																</span></a>
+								<a href="/list-55" target="_blank"><span>音箱
+																</span></a>
+								<a href="/list-56" target="_blank"><span>移动电源
+																</span></a>
+					</div>
+					
+						
+						
+								<div class="category-panels children-col-2">
+												<ul class="subcate-list children-col-list">
+											<li class="subcate-item">
+												<a href="/list-229" >
+													<span>耳机
+																											</span>
+												</a>
+											</li>
+											<li class="subcate-item">
+												<a href="/list-55" target="_blank">
+													<span>音箱
+																											</span>
+												</a>
+											</li>
+											<li class="subcate-item">
+												<a href="/list-56" target="_blank">
+													<span>移动电源
+																											</span>
+												</a>
+											</li>
+											<li class="subcate-item">
+												<a href="/list-231" >
+													<span>自拍杆/支架
+																											</span>
+												</a>
+											</li>
+											<li class="subcate-item">
+												<a href="/list-58" target="_blank">
+													<span>充电器/线材
+																											</span>
+												</a>
+											</li>
+											<li class="subcate-item">
+												<a href="/list-83" target="_blank">
+													<span>U盘/存储卡
+																											</span>
+												</a>
+											</li>
+											<li class="subcate-item">
+												<a href="/list-233" target="_blank">
+													<span>排插
+																											</span>
+												</a>
+											</li>
+											<li class="subcate-item">
+												<a href="/list-235" target="_blank">
+													<span>摄像机/镜头
+																											</span>
+												</a>
+											</li>
+											<li class="subcate-item">
+												<a href="/list-239" target="_blank">
+													<span>智能硬件
+														<s><img src="http://res.vmallres.com/images/echannel/icon/hot2.png" alt="hot" /></s>
+																											</span>
+												</a>
+											</li>
+											<li class="subcate-item">
+												<a href="/list-237" target="_blank">
+													<span>生活周边
+																											</span>
+												</a>
+											</li>
+												</ul>
+									<ul class="subcate-list children-col-list">
+								<dl class="category-banner children-col-2">
+									<dt><span>推荐商品</span></dt>
+											<dd><a href="http://www.vmall.com/product/2134.html" >小天鹅蓝牙音箱
+																							</a></dd>
+								</dl>
+								</ul>
+						</div>
+				</li>
+				<li class="category-item ">
+					<div class="category-info">
+						<h3>
+							<a href="http://app.vmall.com" target="_blank"><span>应用市场
+													</span></a></h3>
+								<a href="http://app.vmall.com/game/list" target="_blank"><span>手机游戏
+																</span></a>
+								<a href="http://app.vmall.com" target="_blank"><span>手机应用
+																</span></a>
+					</div>
+					
+						
+						
+								<div class="category-panels children-col-1">
+												<ul class="subcate-list children-col-list">
+											<li class="subcate-item">
+												<a href="http://app.vmall.com/game/list" target="_blank">
+													<span>手机游戏
+																											</span>
+												</a>
+											</li>
+											<li class="subcate-item">
+												<a href="http://app.vmall.com" target="_blank">
+													<span>手机应用
+																											</span>
+												</a>
+											</li>
+						</div>
+				</li>
+		</ol>
+	</div>
+</div>
+<!-- 20140822-分类-end -->
+		
+		<!-- 20140823-分类-end -->
+		<!-- 20130909-导航-start -->
+		<nav class="naver">
+				<ul id="naver-list">
+			<li id="index"><a href="/index.html" 
+               onclick="_paq.push(['trackLink','点击首页活动导航第1位', 'link', '']);ec.code.addAnalytics({hicloud:true});" 
+
+            class="current" 
+
+            >
+  
+             <span>首 页
+   
+					</span></a> </li>
+		<li id="huawei"><a href="http://www.vmall.com/huawei" 
+               onclick="_paq.push(['trackLink','点击首页活动导航第2位', 'link', '']);ec.code.addAnalytics({hicloud:true});" 
+
+             
+
+            target="_blank">
+  
+             <span>华为专区
+   
+					</span></a> </li>
+		<li id="honor"><a href="http://www.vmall.com/honor" 
+               onclick="_paq.push(['trackLink','点击首页活动导航第3位', 'link', '']);ec.code.addAnalytics({hicloud:true});" 
+
+             
+
+            target="_blank">
+  
+             <span>荣耀专区
+   
+					</span></a> </li>
+		<li id="honor"><a href="http://www.vmall.com/product/938665621.html" 
+               onclick="_paq.push(['trackLink','点击首页活动导航第4位', 'link', '']);ec.code.addAnalytics({hicloud:true});" 
+
+             
+
+            target="_blank">
+  
+             <span>荣耀8
+   
+			<s><img src="http://res.vmallres.com/images/echannel/icon/hot.png?20161010091058" alt="hot" /></s>
+					</span></a> </li>
+		<li id="HUAWEI"><a href="http://www.vmall.com/product/3325.html" 
+               onclick="_paq.push(['trackLink','点击首页活动导航第5位', 'link', '']);ec.code.addAnalytics({hicloud:true});" 
+
+             
+
+            target="_blank">
+  
+             <span>HUAWEI P9
+   
+			<s><img src="http://res.vmallres.com/images/echannel/icon/hot.png?20161010091058" alt="hot" /></s>
+					</span></a> </li>
+		<li id="honor"><a href="http://www.vmall.com/product/186517099.html" 
+               onclick="_paq.push(['trackLink','点击首页活动导航第6位', 'link', '']);ec.code.addAnalytics({hicloud:true});" 
+
+             
+
+            target="_blank">
+  
+             <span>荣耀V8
+   
+					</span></a> </li>
+		<li id="honor"><a href="http://www.vmall.com/list-43" 
+               onclick="_paq.push(['trackLink','点击首页活动导航第7位', 'link', '']);ec.code.addAnalytics({hicloud:true});" 
+
+             
+
+            target="_blank">
+  
+             <span>智能家居
+   
+					</span></a> </li>
+		<li id="peijian"><a href="http://sale.vmall.com/peijian.html" 
+               onclick="_paq.push(['trackLink','点击首页活动导航第8位', 'link', '']);ec.code.addAnalytics({hicloud:true});" 
+
+             
+
+            target="_blank">
+  
+             <span>特惠配件
+   
+					</span></a> </li>
+</ul>
+<script>
+	$(function () {
+		$('#naver-list li').hover(function () {
+			$(this).addClass('hover');
+		},function () {
+			$(this).removeClass('hover');
+		});
+
+	});
+</script>
+			
+		</nav><!-- 20130909-导航-end -->
+		</div>
+	</div>
+</div>
+<script>
+(function () {
+	//所有分类显示隐藏控制
+	var isIndex =  true ,
+		categoryBlock = gid('category-block');
+		
+	if(isIndex) return;
+	
+	$("#category-block").hover(function(){
+		$(this).addClass("category-hover");
+	},function(){
+		$(this).removeClass("category-hover");
+	});
+	
+	/*categoryBlock.onmouseover = function () {
+		categoryBlock.className = 'category category-hover';
+	};
+	categoryBlock.onmouseout = function () {
+		categoryBlock.className = 'category';
+	};*/
+	
+}());
+
+/**
+*功能：给鼠标移动到category-list li上面的时候，记得给他多添加一个hover类样式
+*目的是兼容ie6,以及调整二级分类的弹出框的位置。
+*@author 李峰
+*/
+/**
+$(function(){
+	$(".category-item").hover(function(){
+		$(this).addClass("hover");
+		//1.二级分类的top值
+		var childrenTop = $(this).offset().top;
+		//2.一级分类的top值
+		var parentTop = $(".category-list").offset().top;
+		//3.二级分类到一级分类顶部的距离
+		var top = childrenTop - parentTop;
+		//4.二级分类的弹出层的高度
+		var childrenHeight = $(this).find(".category-panels").innerHeight();
+		//5.一级分类容器的总高度
+		var totalHeight = $(".category-list").height();
+		alert("childrenTop:"+childrenTop+";parentTop:"+parentTop+";top:"+top+";childrenHeight:"+childrenHeight+";totalHeight:"+totalHeight) ;
+
+		//6.如果二级分类.category-panels的内容高度大于总容量totalHeight,那么.category-panels置顶，然后多余的自动往下延续
+		//如果二级分类childrenHeight内容高度(childrenHeight + top )大于totalHeight,那么.category-panels往上移动childrenHeight + top -totalHeight
+		if((top + childrenHeight) > totalHeight)
+		{
+			if(childrenHeight > totalHeight)
+			{
+				$(this).find(".category-panels").css("top",-top);
+			}else{
+				//上移动
+				var topX = (childrenHeight+top) - totalHeight;
+				$(this).find(".category-panels").css("top",-topX);
+				
+			}
+			
+		}
+		
+	},function(){
+		$(this).removeClass("hover");
+	});
+});
+ */
+</script>
+<!-- 20130904-热门板-start -->
+<div class="hot-board">
+	<!--ads start-->
+	<div class="ec-slider" id="index_slider">
+	<ul class="ec-slider-list">
+					<li class="ec-slider-item" style="background:url(http://res.vmallres.com/pimages//sale/2016-10/20161008012435550.jpg) 50% 0px no-repeat ;">
+				<div style="width:100%;" class="ec-slider-item-img">
+					<a style="width:100%;height:448px;display:block;" href="http://mm.vmall.com/nova.html" target="_blank" onclick="_paq.push([&#39;trackLink&#39;,&#39;主站PC首焦第1帧&#39;, &#39;link&#39;, &#39; &#39;]);ec.code.addAnalytics({hicloud:true});"></a>
+				</div>
+			</li>
+			<li class="ec-slider-item" style="background:url(http://res.vmallres.com/pimages//sale/2016-09/20160920165955782.jpg) 50% 0px no-repeat ;">
+				<div style="width:100%;" class="ec-slider-item-img">
+					<a style="width:100%;height:448px;display:block;" href="http://www.vmall.com/product/938665621.html" target="_blank" onclick="_paq.push([&#39;trackLink&#39;,&#39;主站PC首焦第2帧&#39;, &#39;link&#39;, &#39; &#39;]);ec.code.addAnalytics({hicloud:true});"></a>
+				</div>
+			</li>
+			<li class="ec-slider-item" style="background:url(http://res.vmallres.com/pimages//sale/2016-10/2016100801250616.png) 50% 0px no-repeat ;">
+				<div style="width:100%;" class="ec-slider-item-img">
+					<a style="width:100%;height:448px;display:block;" href="http://www.vmall.com/product/3325.html" target="_blank" onclick="_paq.push([&#39;trackLink&#39;,&#39;主站PC首焦第4帧&#39;, &#39;link&#39;, &#39; &#39;]);ec.code.addAnalytics({hicloud:true});"></a>
+				</div>
+			</li>
+			<li class="ec-slider-item" style="background:url(http://res.vmallres.com/pimages//sale/2016-09/20160919141957787.jpg) 50% 0px no-repeat ;">
+				<div style="width:100%;" class="ec-slider-item-img">
+					<a style="width:100%;height:448px;display:block;" href="http://www.vmall.com/product/186517099.html" target="_blank" onclick="_paq.push([&#39;trackLink&#39;,&#39;主站PC首焦第5帧&#39;, &#39;link&#39;, &#39; &#39;]);ec.code.addAnalytics({hicloud:true});"></a>
+				</div>
+			</li>
+			<li class="ec-slider-item" style="background:url(http://res.vmallres.com/pimages//sale/2016-09/20160922215622664.jpg) 50% 0px no-repeat ;">
+				<div style="width:100%;" class="ec-slider-item-img">
+					<a style="width:100%;height:448px;display:block;" href="http://www.vmall.com/product/461751298.html" target="_blank" onclick="_paq.push([&#39;trackLink&#39;,&#39;主站PC首焦第6帧&#39;, &#39;link&#39;, &#39; &#39;]);ec.code.addAnalytics({hicloud:true});"></a>
+				</div>
+			</li>
+			<li class="ec-slider-item" style="background:url(http://res.vmallres.com/pimages//sale/2016-09/2016092016593989.jpg) 50% 0px no-repeat ;">
+				<div style="width:100%;" class="ec-slider-item-img">
+					<a style="width:100%;height:448px;display:block;" href="http://www.vmall.com/product/701252243.html" target="_blank" onclick="_paq.push([&#39;trackLink&#39;,&#39;主站PC首焦第7帧&#39;, &#39;link&#39;, &#39; &#39;]);ec.code.addAnalytics({hicloud:true});"></a>
+				</div>
+			</li>
+			<li class="ec-slider-item" style="background:url(http://res.vmallres.com/pimages//sale/2016-09/20160929001415756.jpg) 50% 0px no-repeat ;">
+				<div style="width:100%;" class="ec-slider-item-img">
+					<a style="width:100%;height:448px;display:block;" href="http://www.vmall.com/product/2324.html" target="_blank" onclick="_paq.push([&#39;trackLink&#39;,&#39;主站PC首焦第8帧&#39;, &#39;link&#39;, &#39; &#39;]);ec.code.addAnalytics({hicloud:true});"></a>
+				</div>
+			</li>
+			<li class="ec-slider-item" style="background:url(http://res.vmallres.com/pimages//sale/2016-10/20161001094626122.jpg) 50% 0px no-repeat ;">
+				<div style="width:100%;" class="ec-slider-item-img">
+					<a style="width:100%;height:448px;display:block;" href="http://www.vmall.com/product/2519.html" target="_blank" onclick="_paq.push([&#39;trackLink&#39;,&#39;主站PC首焦第9帧&#39;, &#39;link&#39;, &#39; &#39;]);ec.code.addAnalytics({hicloud:true});"></a>
+				</div>
+			</li>
+			<li class="ec-slider-item" style="background:url(http://res.vmallres.com/pimages//sale/2016-10/20161009205729345.jpg) 50% 0px no-repeat ;">
+				<div style="width:100%;" class="ec-slider-item-img">
+					<a style="width:100%;height:448px;display:block;" href="http://sale.vmall.com/peijian.html" target="_blank" onclick="_paq.push([&#39;trackLink&#39;,&#39;主站PC首焦第10帧&#39;, &#39;link&#39;, &#39; &#39;]);ec.code.addAnalytics({hicloud:true});"></a>
+				</div>
+			</li>
+			<li class="ec-slider-item" style="background:url(http://res.vmallres.com/pimages//sale/2016-10/20161009205738164.jpg) 50% 0px no-repeat ;">
+				<div style="width:100%;" class="ec-slider-item-img">
+					<a style="width:100%;height:448px;display:block;" href="http://www.vmall.com/notice-1589" target="_blank" onclick="_paq.push([&#39;trackLink&#39;,&#39;主站PC首焦第11帧&#39;, &#39;link&#39;, &#39; &#39;]);ec.code.addAnalytics({hicloud:true});"></a>
+				</div>
+			</li>
+	</ul>
+</div>
+<script>
+ec.load("ec.slider", {
+         loadType : "lazy",
+         callback : function() {
+                            $("#index_slider").slider({
+                                     width:     '100%', //必须
+                                     height:     448, //必须
+                                     style : 1,                    //1显示分页，2只显示左右箭头,3两者都显示
+                                     pause : 5000,           //间隔时间
+                                     auto : true,
+								     minWidth : 1200,
+                                     showNumber:true,
+                                     circleBtn:true
+                            });
+         }
+});
+</script><ul></ul><ul></ul>
+	<!--ads end-->
+</div><!-- 20130904-热门板-end -->
+<div class="hr-20"></div>
+
+<!-- 20160812 首页轮播图下方 start -->
+<div class="layout">
+	<!--20160812 新增宫格菜单及广告 start-->
+    <div class="channel-floor-0">
+        <div class="h">
+       
+            <div class="span-240 fl">
+                <ul class="home-channel-list">
+                	
+								 <li class="top left"><a href="http://www.vmall.com/notice-657" target="_blank" onclick="_paq.push(['trackLink','PC首页功能导航_实名认证', 'link', ' ']);ec.code.addAnalytics({hicloud:true});"><img src="http://res.vmallres.com/pimages//squaredInfo/icon/20160922/275d661e7106517e6d32a6a503edccb0.png" alt="实名认证"><span>实名认证</span></a></li>
+							 	<li class="top"><a href="http://www.vmall.com/recycle?url=%3Fpid%3D1032" target="_blank" onclick="_paq.push(['trackLink','PC首页功能导航_以旧换新', 'link', ' ']);ec.code.addAnalytics({hicloud:true});"><img src="http://res.vmallres.com/pimages//squaredInfo/icon/20160922/145ec77ebedc2532604d3b82457f586a.png" alt="以旧换新"><span>以旧换新</span></a></li>
+								<li class="top"><a href="http://www.vmall.com/priority?ANONYMITY_LOGIN_NAME=lik***%40***&amp;ANONYMITY_EMAIL=lik***%40***&amp;ANONYMI" target="_blank" onclick="_paq.push(['trackLink','PC首页功能导航_优购码', 'link', ' ']);ec.code.addAnalytics({hicloud:true});"><img src="http://res.vmallres.com/pimages//squaredInfo/icon/20160922/9148fc18e5fe13a1e7eb66668b62bf10.png" alt="优购码"><span>优购码</span></a></li>
+								 <li class="left"><a href="http://www.vmall.com/honor/remind" target="_blank" onclick="_paq.push(['trackLink','PC首页功能导航_开售提醒', 'link', ' ']);ec.code.addAnalytics({hicloud:true});"><img src="http://res.vmallres.com/pimages//squaredInfo/icon/20160922/83dd2782c79496d358f477981ad7710b.png" alt="开售提醒"><span>开售提醒</span></a></li>
+								<li class=""><a href="http://www.vmall.com/notice-list" target="_blank" onclick="_paq.push(['trackLink','PC首页功能导航_公告', 'link', ' ']);ec.code.addAnalytics({hicloud:true});"><img src="http://res.vmallres.com/pimages//squaredInfo/icon/20160922/09506e164e078da20af2dde4f55d8df5.png" alt="公告"><span>公告</span></a></li>
+							 	<li class=""><a href="http://www.vmall.com/privilege" target="_blank" onclick="_paq.push(['trackLink','PC首页功能导航_特权频道', 'link', ' ']);ec.code.addAnalytics({hicloud:true});"><img src="http://res.vmallres.com/pimages//squaredInfo/icon/20160922/93ef0510f05665c6bea5e02fc0f0e05a.png" alt="特权频道"><span>特权频道</span></a></li>
+                   
+                </ul>
+            </div>
+            <div class="span-960 fr">
+            	<ul class="home-promo-list clearfix"><li><a target="_blank" href="http://mm.vmall.com/nova.html" class="item"><img src="http://res.vmallres.com/pimages//sale/2016-10/20161008153046135.jpg" /></a></li><li><a target="_blank" href="http://www.vmall.com/product/938665621.html" class="item"><img src="http://res.vmallres.com/pimages//sale/2016-09/20160923091708377.jpg" /></a></li><li><a target="_blank" href="http://www.vmall.com/product/3451.html" class="item"><img src="http://res.vmallres.com/pimages//sale/2016-10/20161003214921586.jpg" /></a></li></ul>
+            </div>
+        </div>
+        <!--20160812 新增宫格菜单及广告 end-->
+        <!--20160812 热销推荐 start-->
+<!-- 20160812-首页-热销推荐-start -->
+<div class="b">
+    <div class="home-recommend-goods">
+        <div class="h">
+            <h2 class="title">热销推荐</h2>
+        </div>
+        <div class="b">
+            <div class="goods-box">
+                <ul id="testBanner" class="grid-list">
+	                							<!-- 取前5个 -->
+								<li class="grid-items">
+			                        <a class="thumb" target="_blank" href="http://www.vmall.com/product/186517099.html#198202706,75" >
+			                            <p class="grid-img"><img alt="荣耀V8" data-lazy-src="http://res0.vmallres.com/pimages//frontLocation/content/35/1474618225574.jpg"></p>
+			                            <h3 class="grid-title">荣耀V8</h3>
+			                            <p class="grid-desc">双镜头  长续航  2K屏&nbsp;</p>
+			                            <p class="grid-price">2799元</p>
+			                        </a>
+			                        <p class="grid-tips">
+			                        		<img data-lazy-src="http://res7.vmallres.com/pimages//tag/47/1474556781883.jpg" alt="">
+			                       	</p>
+			                    </li>
+							<!-- 取前5个 -->
+								<li class="grid-items">
+			                        <a class="thumb" target="_blank" href="http://www.vmall.com/product/3325.html" >
+			                            <p class="grid-img"><img alt="HUAWEI P9" data-lazy-src="http://res0.vmallres.com/pimages//frontLocation/content/775307/1475761903955.jpg"></p>
+			                            <h3 class="grid-title">HUAWEI P9</h3>
+			                            <p class="grid-desc">赠TYPE C数据线&nbsp;</p>
+			                            <p class="grid-price">3688元</p>
+			                        </a>
+			                        <p class="grid-tips">
+			                       	</p>
+			                    </li>
+							<!-- 取前5个 -->
+								<li class="grid-items">
+			                        <a class="thumb" target="_blank" href="http://www.vmall.com/product/701252243.html" >
+			                            <p class="grid-img"><img alt="荣耀 NOTE 8" data-lazy-src="http://res0.vmallres.com/pimages//frontLocation/content/775303/1475029687224.jpg"></p>
+			                            <h3 class="grid-title">荣耀 NOTE 8</h3>
+			                            <p class="grid-desc">6.6英寸2K大屏&nbsp;</p>
+			                            <p class="grid-price">2499元</p>
+			                        </a>
+			                        <p class="grid-tips">
+			                       	</p>
+			                    </li>
+							<!-- 取前5个 -->
+								<li class="grid-items">
+			                        <a class="thumb" target="_blank" href="http://www.vmall.com/product/641202729.html" >
+			                            <p class="grid-img"><img alt="荣耀畅玩5A" data-lazy-src="http://res0.vmallres.com/pimages//frontLocation/content/775305/1475824619083.jpg"></p>
+			                            <h3 class="grid-title">荣耀畅玩5A</h3>
+			                            <p class="grid-desc">800万+1300万像素摄像头&nbsp;</p>
+			                            <p class="grid-price">799元</p>
+			                        </a>
+			                        <p class="grid-tips">
+			                        		<img data-lazy-src="http://res7.vmallres.com/pimages//tag/49/1474556795010.jpg" alt="">
+			                       	</p>
+			                    </li>
+							<!-- 取前5个 -->
+								<li class="grid-items">
+			                        <a class="thumb" target="_blank" href="http://www.vmall.com/product/2647.html#6031,76" >
+			                            <p class="grid-img"><img alt="HUAWEI Mate8" data-lazy-src="http://res0.vmallres.com/pimages//frontLocation/content/775309/1474558006168.jpg"></p>
+			                            <h3 class="grid-title">HUAWEI Mate8</h3>
+			                            <p class="grid-desc">高性能与长续航的结合&nbsp;</p>
+			                            <p class="grid-price">2799元</p>
+			                        </a>
+			                        <p class="grid-tips">
+			                       	</p>
+			                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 20160812-首页-热销推荐-end -->        <!--20160812 热销推荐 end-->
+        <div></div>
+
+    </div>
+</div>
+<!-- 20160812 首页轮播图下方 end -->
+
+<div class="hr-30"></div>
+<div class="layout">
+	<!-- 20160802-banner-1200*110-start -->
+    <div class="home-banner">
+        <!-- 20160802-banner-图片轮换-start -->
+		<div class="home-banner-slideshow">
+			<!-- 20130903-ad-图片轮换-start --><div class="banner-slideshow"><div id="m-banner" class="ec-slider"><ul class="ec-slider-list"><li class="ec-slider-item"><div class="ec-slider-item-img"><a href="http://www.vmall.com/product/886153777.html" onclick="_paq.push([&#39;trackLink&#39;,&#39;首页中间通栏广告第1位&#39;, &#39;link&#39;, &#39;&#39;]);ec.code.addAnalytics({hicloud:true});" target="_blank"><img src="http://res.vmallres.com/pimages//sale/2016-09/20160923103128895.jpg" /></a></div></li><li class="ec-slider-item"><div class="ec-slider-item-img"><a href="http://www.vmall.com/recycle?url=%3Fpid%3D1032" onclick="_paq.push([&#39;trackLink&#39;,&#39;首页中间通栏广告第2位&#39;, &#39;link&#39;, &#39;&#39;]);ec.code.addAnalytics({hicloud:true});" target="_blank"><img src="http://res.vmallres.com/pimages//sale/2016-10/20161009092305638.jpg" /></a></div></li><li class="ec-slider-item"><div class="ec-slider-item-img"><a href="http://www.vmall.com/notice-1449" onclick="_paq.push([&#39;trackLink&#39;,&#39;首页中间通栏广告第3位&#39;, &#39;link&#39;, &#39;&#39;]);ec.code.addAnalytics({hicloud:true});" target="_blank"><img src="http://res.vmallres.com/pimages//sale/2016-09/20160923092437806.jpg" /></a></div></li></ul></div><script>
+				
+				ec.load("ec.slider", {
+					loadType : "lazy",
+					callback : function() { 
+						$("#m-banner").slider({
+							width: 1200, //　必须
+							height: 110, //　必须
+							style : 1, //　1显示分页，2只显示左右箭头,3两者都显示
+							pause : 5000, 	//间隔时间
+                            auto : true
+						});
+					}
+				});
+				
+			</script></div>
+		</div>
+        <!-- 20160802-banner-图片轮换-end -->
+    </div>
+    <!-- 20160802-banner-1200*110-end -->
+</div>
+<div class="hr-40"></div>
+
+<!-- 20160802-HOME GOOGLIST-start -->
+<div class="home-channel-container">
+<!-- 初始值 -->
+    <div class="layout">
+        <div class="home-channel-floor">
+            <div class="h">
+                <h2 class="channel-title fl">精品手机</h2>
+                <ul class="channel-nav fl">
+                    	<li><a href="/list-75" target="_blank">荣耀</a></li>
+                    	<li><a href="/list-77" target="_blank">畅玩</a></li>
+                    	<li><a href="/list-76" target="_blank">华为 Mate/P系列</a></li>
+                    	<li><a href="/list-277" target="_blank">华为 nova系列</a></li>
+                    	<li><a href="/list-81" target="_blank">华为 G系列</a></li>
+                    	<li><a href="/list-275" target="_blank">华为 畅享系列</a></li>
+                    	<li><a href="/list-38" target="_blank">合约机</a></li>
+                </ul>
+                <div class="channel-more fr"><span></span><span></span><span></span>
+                	<a href="/list-36" target="_blank">更多</a><span></span><span></span><span></span>
+                </div>
+            </div>
+            <div class="b">
+            	<!--20160815 广告 start-->
+                <div class="span-232 fl">
+                    <ul class="grid-promo-list">
+				                    	<!--20160815 大广告 start-->
+				                        <li class="grid-items grid-items-lg">
+					                        <a class="thumb" href="http://www.vmall.com/product/2172.html#4400,0" target="_blank">
+													<img data-lazy-src="http://res0.vmallres.com/pimages//frontLocation/content/775179/1474556690400.jpg" alt="" />
+					                        </a>
+				                        </li>
+		                        <!--20160815 大广告 end-->
+		                        <!--20160815 大广告 end-->
+		                        <!--20160815 大广告 end-->
+		                        <!--20160815 大广告 end-->
+		                        <!--20160815 大广告 end-->
+		                        <!--20160815 大广告 end-->
+		                        <!--20160815 大广告 end-->
+		                        <!--20160815 大广告 end-->
+		                        <!--20160815 大广告 end-->
+                    </ul>
+                </div>
+                <!--20160815 广告 end-->
+                
+                <div class="span-968 fl">
+                    <ul class="grid-list">
+                        <!--通过添加current 来实现 hover效果-->
+                        <!--通过添加current 来实现 hover效果-->
+                        <li class="grid-items">
+                            <a class="thumb" href="/product/2519.html#418934910,0" target="_blank">
+                                <p class="grid-img">
+											<img data-lazy-src="http://res0.vmallres.com/pimages//frontLocation/content/775191/1476007247824.jpg" alt="荣耀畅玩5X" />
+                                </p>
+                                <h3 class="grid-title">荣耀畅玩5X</h3>
+                                <p class="grid-desc">移动版送超值配件&nbsp;</p>
+                                <p class="grid-price"><em>&yen;</em><span>999</span></p>
+                                <p class="grid-tips">
+										<img data-lazy-src="http://res0.vmallres.com/pimages//tag/47/1474556781883.jpg" alt="荣耀畅玩5X 双卡双待 移动版 智能手机（落日金）"/>
+                                </p>
+                            </a>
+                        </li>
+                        <!--计算区域行中商品数量是否够了-->
+                        <!--通过添加current 来实现 hover效果-->
+                        <li class="grid-items">
+                            <a class="thumb" href="/product/2324.html#8155,0" target="_blank">
+                                <p class="grid-img">
+											<img data-lazy-src="http://res0.vmallres.com/pimages//frontLocation/content/775193/1475068498935.jpg" alt="荣耀7i" />
+                                </p>
+                                <h3 class="grid-title">荣耀7i</h3>
+                                <p class="grid-desc">原价1499  直降100&nbsp;</p>
+                                <p class="grid-price"><em>&yen;</em><span>1399</span></p>
+                                <p class="grid-tips">
+										<img data-lazy-src="http://res0.vmallres.com/pimages//tag/53/1474556828097.jpg" alt="荣耀7i 双卡双待 全网通DM版 3GB内存+32GB存储（日耀金）"/>
+                                </p>
+                            </a>
+                        </li>
+                        <!--计算区域行中商品数量是否够了-->
+                        <!--通过添加current 来实现 hover效果-->
+                        <li class="grid-items">
+                            <a class="thumb" href="/product/3419.html#8565,0" target="_blank">
+                                <p class="grid-img">
+											<img data-lazy-src="http://res0.vmallres.com/pimages//frontLocation/content/775249/1475913702274.jpg" alt="HUAWEI P9 Plus" />
+                                </p>
+                                <h3 class="grid-title">HUAWEI P9 Plus</h3>
+                                <p class="grid-desc">128GB版享压感体验&nbsp;</p>
+                                <p class="grid-price"><em>&yen;</em><span>4388</span></p>
+                            </a>
+                        </li>
+                        <!--计算区域行中商品数量是否够了-->
+                        <!--通过添加current 来实现 hover效果-->
+                        <li class="grid-items">
+                            <a class="thumb" href="/product/3427.html#8607,0" target="_blank">
+                                <p class="grid-img">
+											<img data-lazy-src="http://res0.vmallres.com/pimages//frontLocation/content/775211/1474556857361.jpg" alt="HUAWEI G9 青春版" />
+                                </p>
+                                <h3 class="grid-title">HUAWEI G9 青春版</h3>
+                                <p class="grid-desc">直降100&nbsp;</p>
+                                <p class="grid-price"><em>&yen;</em><span>1599</span></p>
+                                <p class="grid-tips">
+										<img data-lazy-src="http://res0.vmallres.com/pimages//tag/53/1474556828097.jpg" alt="HUAWEI G9 青春版 全网通版 16GB ROM（白色）"/>
+                                </p>
+                            </a>
+                        </li>
+                        <!--计算区域行中商品数量是否够了-->
+                        <!--通过添加current 来实现 hover效果-->
+                        <li class="grid-items">
+                            <a class="thumb" href="/product/2634.html#6044,0" target="_blank">
+                                <p class="grid-img">
+											<img data-lazy-src="http://res0.vmallres.com/pimages//frontLocation/content/775221/1474556908181.jpg" alt="HUAWEI 畅享5S" />
+                                </p>
+                                <h3 class="grid-title">HUAWEI 畅享5S</h3>
+                                <p class="grid-desc">金属机身  指纹识别&nbsp;</p>
+                                <p class="grid-price"><em>&yen;</em><span>1099</span></p>
+                            </a>
+                        </li>
+                        <!--计算区域行中商品数量是否够了-->
+                        <!--通过添加current 来实现 hover效果-->
+                        <li class="grid-items">
+                            <a class="thumb" href="/product/633855890.html#663802315,0" target="_blank">
+                                <p class="grid-img">
+											<img data-lazy-src="http://res0.vmallres.com/pimages//frontLocation/content/775229/1474556951506.jpg" alt="荣耀畅玩5" />
+                                </p>
+                                <h3 class="grid-title">荣耀畅玩5</h3>
+                                <p class="grid-desc">惊艳小屏 手感与质感兼具&nbsp;</p>
+                                <p class="grid-price"><em>&yen;</em><span>599</span></p>
+                                <p class="grid-tips">
+										<img data-lazy-src="http://res0.vmallres.com/pimages//tag/49/1474556795010.jpg" alt="荣耀畅玩5 双卡双待 移动4G版（金色）"/>
+                                </p>
+                            </a>
+                        </li>
+                        <!--计算区域行中商品数量是否够了-->
+                        <!--通过添加current 来实现 hover效果-->
+                        <li class="grid-items">
+                            <a class="thumb" href="/product/461751298.html#561870304,0" target="_blank">
+                                <p class="grid-img">
+											<img data-lazy-src="http://res0.vmallres.com/pimages//frontLocation/content/775235/1475140506583.jpg" alt="HUAWEI 麦芒5" />
+                                </p>
+                                <h3 class="grid-title">HUAWEI 麦芒5</h3>
+                                <p class="grid-desc">年轻  不畏什么&nbsp;</p>
+                                <p class="grid-price"><em>&yen;</em><span>2399</span></p>
+                            </a>
+                        </li>
+                        <!--计算区域行中商品数量是否够了-->
+                        <!--通过添加current 来实现 hover效果-->
+                        <li class="grid-items">
+                            <a class="thumb" href="/product/549250484.html#647563679,0" target="_blank">
+                                <p class="grid-img">
+											<img data-lazy-src="http://res0.vmallres.com/pimages//frontLocation/content/775239/1474557032101.jpg" alt="HUAWEI G9 Plus" />
+                                </p>
+                                <h3 class="grid-title">HUAWEI G9 Plus</h3>
+                                <p class="grid-desc">赠超值好礼&nbsp;</p>
+                                <p class="grid-price"><em>&yen;</em><span>2399</span></p>
+                            </a>
+                        </li>
+                        <!--计算区域行中商品数量是否够了-->
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+<!-- 初始值 -->
+    <div class="layout">
+        <div class="home-channel-floor">
+            <div class="h">
+                <h2 class="channel-title fl">笔记本&amp;平板</h2>
+                <ul class="channel-nav fl">
+                    	<li><a href="/list-41" target="_blank">平板电脑</a></li>
+                    	<li><a href="/list-42" target="_blank">MateBook</a></li>
+                    	<li><a href="/list-85" target="_blank">扩展坞</a></li>
+                    	<li><a href="/list-271" target="_blank">触控笔</a></li>
+                    	<li><a href="/list-273" target="_blank">二合一键盘</a></li>
+                </ul>
+                <div class="channel-more fr"><span></span><span></span><span></span>
+                	<a href="/list-40" target="_blank">更多</a><span></span><span></span><span></span>
+                </div>
+            </div>
+            <div class="b">
+            	<!--20160815 广告 start-->
+                <div class="span-232 fl">
+                    <ul class="grid-promo-list">
+				                    	<!--20160815 大广告 start-->
+				                        <li class="grid-items grid-items-lg">
+					                        <a class="thumb" href="http://www.vmall.com/product/965498680.html" target="_blank">
+													<img data-lazy-src="http://res1.vmallres.com/pimages//frontLocation/content/775247/1474569413917.jpg" alt="" />
+					                        </a>
+				                        </li>
+		                        <!--20160815 大广告 end-->
+		                        <!--20160815 大广告 end-->
+		                        <!--20160815 大广告 end-->
+		                        <!--20160815 大广告 end-->
+		                        <!--20160815 大广告 end-->
+		                        <!--20160815 大广告 end-->
+		                        <!--20160815 大广告 end-->
+		                        <!--20160815 大广告 end-->
+		                        <!--20160815 大广告 end-->
+                    </ul>
+                </div>
+                <!--20160815 广告 end-->
+                
+                <div class="span-968 fl">
+                    <ul class="grid-list">
+                        <!--通过添加current 来实现 hover效果-->
+                        <!--通过添加current 来实现 hover效果-->
+                        <li class="grid-items">
+                            <a class="thumb" href="/product/241920871.html#58267447,0" target="_blank">
+                                <p class="grid-img">
+											<img data-lazy-src="http://res1.vmallres.com/pimages//frontLocation/content/775251/1474590678698.jpg" alt="华为平板 M3" />
+                                </p>
+                                <h3 class="grid-title">华为平板 M3</h3>
+                                <p class="grid-desc">清晰视界 让声音鲜活起来&nbsp;</p>
+                                <p class="grid-price"><em>&yen;</em><span>1888</span></p>
+                                <p class="grid-tips">
+										<img data-lazy-src="http://res1.vmallres.com/pimages//tag/45/1474556767268.jpg" alt="华为平板 M3 4GB+32GB  WIFI版（日晖金）"/>
+                                </p>
+                            </a>
+                        </li>
+                        <!--计算区域行中商品数量是否够了-->
+                        <!--通过添加current 来实现 hover效果-->
+                        <li class="grid-items">
+                            <a class="thumb" href="/product/1987.html#513531311,0" target="_blank">
+                                <p class="grid-img">
+											<img data-lazy-src="http://res1.vmallres.com/pimages//frontLocation/content/775267/1474856877832.jpg" alt="荣耀畅玩平板" />
+                                </p>
+                                <h3 class="grid-title">荣耀畅玩平板</h3>
+                                <p class="grid-desc">LTE版新品上市 双4G通话&nbsp;</p>
+                                <p class="grid-price"><em>&yen;</em><span>799</span></p>
+                            </a>
+                        </li>
+                        <!--计算区域行中商品数量是否够了-->
+                        <!--通过添加current 来实现 hover效果-->
+                        <li class="grid-items">
+                            <a class="thumb" href="/product/2043.html#3979,0" target="_blank">
+                                <p class="grid-img">
+											<img data-lazy-src="http://res1.vmallres.com/pimages//frontLocation/content/775283/1474557461244.jpg" alt="荣耀X2" />
+                                </p>
+                                <h3 class="grid-title">荣耀X2</h3>
+                                <p class="grid-desc">金属材质 紧凑设计&nbsp;</p>
+                                <p class="grid-price"><em>&yen;</em><span>1399</span></p>
+                            </a>
+                        </li>
+                        <!--计算区域行中商品数量是否够了-->
+                        <!--通过添加current 来实现 hover效果-->
+                        <li class="grid-items">
+                            <a class="thumb" href="/product/2132.html#3889,0" target="_blank">
+                                <p class="grid-img">
+											<img data-lazy-src="http://res1.vmallres.com/pimages//frontLocation/content/775271/1475892502116.jpg" alt="荣耀畅玩平板note" />
+                                </p>
+                                <h3 class="grid-title">荣耀畅玩平板note</h3>
+                                <p class="grid-desc">9.6英寸IPS高清屏幕&nbsp;</p>
+                                <p class="grid-price"><em>&yen;</em><span>1199</span></p>
+                            </a>
+                        </li>
+                        <!--计算区域行中商品数量是否够了-->
+                        <!--通过添加current 来实现 hover效果-->
+                        <li class="grid-items">
+                            <a class="thumb" href="/product/3543.html#8991,0" target="_blank">
+                                <p class="grid-img">
+											<img data-lazy-src="http://res1.vmallres.com/pimages//frontLocation/content/775259/1474860361492.jpg" alt="华为揽阅 M2 青春版 10.1英寸" />
+                                </p>
+                                <h3 class="grid-title">华为揽阅 M2 青春版 10.1英寸</h3>
+                                <p class="grid-desc">出色续航 纯净音质&nbsp;</p>
+                                <p class="grid-price"><em>&yen;</em><span>1899</span></p>
+                            </a>
+                        </li>
+                        <!--计算区域行中商品数量是否够了-->
+                        <!--通过添加current 来实现 hover效果-->
+                        <li class="grid-items">
+                            <a class="thumb" href="/product/3531.html#8947,0" target="_blank">
+                                <p class="grid-img">
+											<img data-lazy-src="http://res1.vmallres.com/pimages//frontLocation/content/775279/1474939356601.jpg" alt="华为揽阅 M2 青春版 7.0英寸" />
+                                </p>
+                                <h3 class="grid-title">华为揽阅 M2 青春版 7.0英寸</h3>
+                                <p class="grid-desc">高清大屏 侧边指纹&nbsp;</p>
+                                <p class="grid-price"><em>&yen;</em><span>1599</span></p>
+                            </a>
+                        </li>
+                        <!--计算区域行中商品数量是否够了-->
+                        <!--通过添加current 来实现 hover效果-->
+                        <li class="grid-items">
+                            <a class="thumb" href="/product/3087.html#831624021,0" target="_blank">
+                                <p class="grid-img">
+											<img data-lazy-src="http://res1.vmallres.com/pimages//frontLocation/content/775291/1474557502605.jpg" alt="华为 M2 10.0 平板电脑" />
+                                </p>
+                                <h3 class="grid-title">华为 M2 10.0 平板电脑</h3>
+                                <p class="grid-desc">悦耳倾心 智趣合一&nbsp;</p>
+                                <p class="grid-price"><em>&yen;</em><span>2688</span></p>
+                            </a>
+                        </li>
+                        <!--计算区域行中商品数量是否够了-->
+                        <!--通过添加current 来实现 hover效果-->
+                        <li class="grid-items">
+                            <a class="thumb" href="/product/1350.html#3261,0" target="_blank">
+                                <p class="grid-img">
+											<img data-lazy-src="http://res1.vmallres.com/pimages//frontLocation/content/775253/1475892088079.jpg" alt="荣耀平板" />
+                                </p>
+                                <h3 class="grid-title">荣耀平板</h3>
+                                <p class="grid-desc">8英寸高清广视角炫彩屏幕&nbsp;</p>
+                                <p class="grid-price"><em>&yen;</em><span>999</span></p>
+                            </a>
+                        </li>
+                        <!--计算区域行中商品数量是否够了-->
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+<!-- 初始值 -->
+    <div class="layout">
+        <div class="home-channel-floor">
+            <div class="h">
+                <h2 class="channel-title fl">智能穿戴</h2>
+                <ul class="channel-nav fl">
+                    	<li><a href="/list-241" target="_blank">手环</a></li>
+                    	<li><a href="/list-247" target="_blank">手表</a></li>
+                </ul>
+                <div class="channel-more fr"><span></span><span></span><span></span>
+                	<a href="/list-59" target="_blank">更多</a><span></span><span></span><span></span>
+                </div>
+            </div>
+            <div class="b">
+            	<!--20160815 广告 start-->
+                <div class="span-232 fl">
+                    <ul class="grid-promo-list">
+				                    	<!--20160815 大广告 start-->
+				                        <li class="grid-items grid-items-lg">
+					                        <a class="thumb" href="http://www.vmall.com/product/3487.html" target="_blank">
+													<img data-lazy-src="http://res2.vmallres.com/pimages//frontLocation/content/774905/1474569252387.jpg" alt="" />
+					                        </a>
+				                        </li>
+		                        <!--20160815 大广告 end-->
+		                        <!--20160815 大广告 end-->
+		                        <!--20160815 大广告 end-->
+		                        <!--20160815 大广告 end-->
+		                        <!--20160815 大广告 end-->
+		                        <!--20160815 大广告 end-->
+		                        <!--20160815 大广告 end-->
+		                        <!--20160815 大广告 end-->
+		                        <!--20160815 大广告 end-->
+                    </ul>
+                </div>
+                <!--20160815 广告 end-->
+                
+                <div class="span-968 fl">
+                    <ul class="grid-list">
+                        <!--通过添加current 来实现 hover效果-->
+                        <!--通过添加current 来实现 hover效果-->
+                        <li class="grid-items">
+                            <a class="thumb" href="/product/2323.html#4990,0" target="_blank">
+                                <p class="grid-img">
+											<img data-lazy-src="http://res2.vmallres.com/pimages//frontLocation/content/775165/1474556906965.jpg" alt="荣耀手环zero" />
+                                </p>
+                                <h3 class="grid-title">荣耀手环zero</h3>
+                                <p class="grid-desc">北欧简约气质 简洁之美&nbsp;</p>
+                                <p class="grid-price"><em>&yen;</em><span>399</span></p>
+                            </a>
+                        </li>
+                        <!--计算区域行中商品数量是否够了-->
+                        <!--通过添加current 来实现 hover效果-->
+                        <li class="grid-items">
+                            <a class="thumb" href="/product/2642.html#5989,0" target="_blank">
+                                <p class="grid-img">
+											<img data-lazy-src="http://res2.vmallres.com/pimages//frontLocation/content/775187/1474556934044.jpg" alt="HUAWEI WATCH" />
+                                </p>
+                                <h3 class="grid-title">HUAWEI WATCH</h3>
+                                <p class="grid-desc">运动健康 语音服务 信息助手&nbsp;</p>
+                                <p class="grid-price"><em>&yen;</em><span>3288</span></p>
+                            </a>
+                        </li>
+                        <!--计算区域行中商品数量是否够了-->
+                        <!--通过添加current 来实现 hover效果-->
+                        <li class="grid-items">
+                            <a class="thumb" href="/product/3239.html#5765,0" target="_blank">
+                                <p class="grid-img">
+											<img data-lazy-src="http://res2.vmallres.com/pimages//frontLocation/content/775173/1474556884521.jpg" alt="荣耀手环zero SS版" />
+                                </p>
+                                <h3 class="grid-title">荣耀手环zero SS版</h3>
+                                <p class="grid-desc">双环绕意大利真皮腕带&nbsp;</p>
+                                <p class="grid-price"><em>&yen;</em><span>599</span></p>
+                            </a>
+                        </li>
+                        <!--计算区域行中商品数量是否够了-->
+                        <!--通过添加current 来实现 hover效果-->
+                        <li class="grid-items">
+                            <a class="thumb" href="/product/3251.html#7987,0" target="_blank">
+                                <p class="grid-img">
+											<img data-lazy-src="http://res2.vmallres.com/pimages//frontLocation/content/775209/1474556855258.jpg" alt="HUAWEI WATCH  星月系列" />
+                                </p>
+                                <h3 class="grid-title">HUAWEI WATCH  星月系列</h3>
+                                <p class="grid-desc">蓝牙连接 扫码支付&nbsp;</p>
+                                <p class="grid-price"><em>&yen;</em><span>3888</span></p>
+                            </a>
+                        </li>
+                        <!--计算区域行中商品数量是否够了-->
+                        <!--通过添加current 来实现 hover效果-->
+                        <li class="grid-items">
+                            <a class="thumb" href="/product/495136506.html#107428549,0" target="_blank">
+                                <p class="grid-img">
+											<img data-lazy-src="http://res2.vmallres.com/pimages//frontLocation/content/775171/1474556870053.jpg" alt="华为儿童手表" />
+                                </p>
+                                <h3 class="grid-title">华为儿童手表</h3>
+                                <p class="grid-desc">高清通话 防尘防水低辐射&nbsp;</p>
+                                <p class="grid-price"><em>&yen;</em><span>688</span></p>
+                            </a>
+                        </li>
+                        <!--计算区域行中商品数量是否够了-->
+                        <!--通过添加current 来实现 hover效果-->
+                        <li class="grid-items">
+                            <a class="thumb" href="/product/2322.html#5028,0" target="_blank">
+                                <p class="grid-img">
+											<img data-lazy-src="http://res2.vmallres.com/pimages//frontLocation/content/775197/1474556947004.jpg" alt="荣耀小K儿童通话手表" />
+                                </p>
+                                <h3 class="grid-title">荣耀小K儿童通话手表</h3>
+                                <p class="grid-desc">双向通话 安全定位&nbsp;</p>
+                                <p class="grid-price"><em>&yen;</em><span>688</span></p>
+                            </a>
+                        </li>
+                        <!--计算区域行中商品数量是否够了-->
+                        <!--通过添加current 来实现 hover效果-->
+                        <li class="grid-items">
+                            <a class="thumb" href="/product/414244322.html#355442544,0" target="_blank">
+                                <p class="grid-img">
+											<img data-lazy-src="http://res2.vmallres.com/pimages//frontLocation/content/775237/1474557003913.jpg" alt="荣耀畅玩手环 A1" />
+                                </p>
+                                <h3 class="grid-title">荣耀畅玩手环 A1</h3>
+                                <p class="grid-desc">来电提醒 运动睡眠&amp;紫外线监测&nbsp;</p>
+                                <p class="grid-price"><em>&yen;</em><span>109</span></p>
+                                <p class="grid-tips">
+										<img data-lazy-src="http://res2.vmallres.com/pimages//tag/49/1474556795010.jpg" alt="荣耀畅玩手环 A1 （魔法黑）"/>
+                                </p>
+                            </a>
+                        </li>
+                        <!--计算区域行中商品数量是否够了-->
+                        <!--通过添加current 来实现 hover效果-->
+                        <li class="grid-items">
+                            <a class="thumb" href="/product/1910.html#3727,0" target="_blank">
+                                <p class="grid-img">
+											<img data-lazy-src="http://res2.vmallres.com/pimages//frontLocation/content/775243/1474569987671.jpg" alt="华为手环 B2" />
+                                </p>
+                                <h3 class="grid-title">华为手环 B2</h3>
+                                <p class="grid-desc">腕上私语 言行合一&nbsp;</p>
+                                <p class="grid-price"><em>&yen;</em><span>999</span></p>
+                            </a>
+                        </li>
+                        <!--计算区域行中商品数量是否够了-->
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+<!-- 初始值 -->
+    <div class="layout">
+        <div class="home-channel-floor">
+            <div class="h">
+                <h2 class="channel-title fl">智能家居</h2>
+                <ul class="channel-nav fl">
+                    	<li><a href="/list-263" target="_blank">子母路由</a></li>
+                    	<li><a href="/list-46" target="_blank">电视盒子</a></li>
+                    	<li><a href="/list-45" target="_blank">路由器</a></li>
+                    	<li><a href="/list-44" target="_blank">电力猫</a></li>
+                    	<li><a href="/list-97" target="_blank">随行wifi</a></li>
+                </ul>
+                <div class="channel-more fr"><span></span><span></span><span></span>
+                	<a href="/list-43" target="_blank">更多</a><span></span><span></span><span></span>
+                </div>
+            </div>
+            <div class="b">
+            	<!--20160815 广告 start-->
+                <div class="span-232 fl">
+                    <ul class="grid-promo-list">
+                    			<!--20160815 小广告 start-->
+				                        <li class="grid-items grid-items-md">
+				                        	<a class="thumb" href="http://www.vmall.com/product/886153777.html" target="_blank">
+													<img data-lazy-src="http://res3.vmallres.com/pimages//frontLocation/content/775311/1474619383900.jpg" alt="" />
+				                        	</a>
+				                        </li>
+		                        <!--20160815 小广告 end-->
+                    			<!--20160815 小广告 start-->
+				                        <li class="grid-items grid-items-md">
+				                        	<a class="thumb" href="http://www.vmall.com/product/690174055.html" target="_blank">
+													<img data-lazy-src="http://res3.vmallres.com/pimages//frontLocation/content/775321/1474593854813.jpg" alt="" />
+				                        	</a>
+				                        </li>
+		                        <!--20160815 小广告 end-->
+                    			<!--20160815 小广告 start-->
+		                        <!--20160815 小广告 end-->
+                    			<!--20160815 小广告 start-->
+		                        <!--20160815 小广告 end-->
+                    			<!--20160815 小广告 start-->
+		                        <!--20160815 小广告 end-->
+                    			<!--20160815 小广告 start-->
+		                        <!--20160815 小广告 end-->
+                    			<!--20160815 小广告 start-->
+		                        <!--20160815 小广告 end-->
+                    			<!--20160815 小广告 start-->
+		                        <!--20160815 小广告 end-->
+                    			<!--20160815 小广告 start-->
+		                        <!--20160815 小广告 end-->
+                    			<!--20160815 小广告 start-->
+		                        <!--20160815 小广告 end-->
+                    </ul>
+                </div>
+                <!--20160815 广告 end-->
+                
+                <div class="span-968 fl">
+                    <ul class="grid-list">
+                        <!--通过添加current 来实现 hover效果-->
+                        <!--通过添加current 来实现 hover效果-->
+                        <!--通过添加current 来实现 hover效果-->
+                        <li class="grid-items">
+                            <a class="thumb" href="/product/538499714.html#874932810,0" target="_blank">
+                                <p class="grid-img">
+											<img data-lazy-src="http://res3.vmallres.com/pimages//frontLocation/content/775329/1474558529974.jpg" alt="华为路由 Q1" />
+                                </p>
+                                <h3 class="grid-title">华为路由 Q1</h3>
+                                <p class="grid-desc">创新子母路由 信号覆盖无忧&nbsp;</p>
+                                <p class="grid-price"><em>&yen;</em><span>599</span></p>
+                            </a>
+                        </li>
+                        <!--计算区域行中商品数量是否够了-->
+                        <!--通过添加current 来实现 hover效果-->
+                        <li class="grid-items">
+                            <a class="thumb" href="/product/3053.html#7219,0" target="_blank">
+                                <p class="grid-img">
+											<img data-lazy-src="http://res3.vmallres.com/pimages//frontLocation/content/775339/1474558659263.jpg" alt="荣耀路由Pro" />
+                                </p>
+                                <h3 class="grid-title">荣耀路由Pro</h3>
+                                <p class="grid-desc">双千兆旗舰路由器 大户型覆盖&nbsp;</p>
+                                <p class="grid-price"><em>&yen;</em><span>328</span></p>
+                            </a>
+                        </li>
+                        <!--计算区域行中商品数量是否够了-->
+                        <!--通过添加current 来实现 hover效果-->
+                        <li class="grid-items">
+                            <a class="thumb" href="/product/1847.html#72344584,0" target="_blank">
+                                <p class="grid-img">
+											<img data-lazy-src="http://res3.vmallres.com/pimages//frontLocation/content/775345/1474558711006.jpg" alt="华为盒子 增强版" />
+                                </p>
+                                <h3 class="grid-title">华为盒子 增强版</h3>
+                                <p class="grid-desc">标配蓝牙遥控器 操控更随心自由&nbsp;</p>
+                                <p class="grid-price"><em>&yen;</em><span>389</span></p>
+                            </a>
+                        </li>
+                        <!--计算区域行中商品数量是否够了-->
+                        <!--通过添加current 来实现 hover效果-->
+                        <li class="grid-items">
+                            <a class="thumb" href="/product/3061.html#7229,0" target="_blank">
+                                <p class="grid-img">
+											<img data-lazy-src="http://res3.vmallres.com/pimages//frontLocation/content/775349/1474558795304.jpg" alt="荣耀WiFi穿墙宝" />
+                                </p>
+                                <h3 class="grid-title">荣耀WiFi穿墙宝</h3>
+                                <p class="grid-desc">电线插座变热点 房间信号变满格&nbsp;</p>
+                                <p class="grid-price"><em>&yen;</em><span>268</span></p>
+                            </a>
+                        </li>
+                        <!--计算区域行中商品数量是否够了-->
+                        <!--通过添加current 来实现 hover效果-->
+                        <li class="grid-items">
+                            <a class="thumb" href="/product/1822.html#329588060,0" target="_blank">
+                                <p class="grid-img">
+											<img data-lazy-src="http://res3.vmallres.com/pimages//frontLocation/content/775335/1474558604656.jpg" alt="荣耀路由" />
+                                </p>
+                                <h3 class="grid-title">荣耀路由</h3>
+                                <p class="grid-desc">双频WiFi传输不卡顿&nbsp;</p>
+                                <p class="grid-price"><em>&yen;</em><span>159</span></p>
+                            </a>
+                        </li>
+                        <!--计算区域行中商品数量是否够了-->
+                        <!--通过添加current 来实现 hover效果-->
+                        <li class="grid-items">
+                            <a class="thumb" href="/product/1680.html#3633,0" target="_blank">
+                                <p class="grid-img">
+											<img data-lazy-src="http://res3.vmallres.com/pimages//frontLocation/content/775347/1474558756556.jpg" alt="荣耀盒子" />
+                                </p>
+                                <h3 class="grid-title">荣耀盒子</h3>
+                                <p class="grid-desc">4核专业媒体芯片 解码能力大提升&nbsp;</p>
+                                <p class="grid-price"><em>&yen;</em><span>258</span></p>
+                            </a>
+                        </li>
+                        <!--计算区域行中商品数量是否够了-->
+                        <!--通过添加current 来实现 hover效果-->
+                        <li class="grid-items">
+                            <a class="thumb" href="/product/899.html#1430,0" target="_blank">
+                                <p class="grid-img">
+											<img data-lazy-src="http://res3.vmallres.com/pimages//frontLocation/content/775343/1474558682308.jpg" alt="华为 WS318 无线路由器" />
+                                </p>
+                                <h3 class="grid-title">华为 WS318 无线路由器</h3>
+                                <p class="grid-desc">华为路由伴侣APP 智能控制&nbsp;</p>
+                                <p class="grid-price"><em>&yen;</em><span>89</span></p>
+                            </a>
+                        </li>
+                        <!--计算区域行中商品数量是否够了-->
+                        <!--通过添加current 来实现 hover效果-->
+                        <li class="grid-items">
+                            <a class="thumb" href="/product/3213.html#8125,0" target="_blank">
+                                <p class="grid-img">
+											<img data-lazy-src="http://res3.vmallres.com/pimages//frontLocation/content/775351/1474558807630.jpg" alt="华为随行WiFi Pro" />
+                                </p>
+                                <h3 class="grid-title">华为随行WiFi Pro</h3>
+                                <p class="grid-desc">行天下 网随行&nbsp;</p>
+                                <p class="grid-price"><em>&yen;</em><span>799</span></p>
+                            </a>
+                        </li>
+                        <!--计算区域行中商品数量是否够了-->
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+<!-- 初始值 -->
+    <div class="layout">
+        <div class="home-channel-floor">
+            <div class="h">
+                <h2 class="channel-title fl">热销配件</h2>
+                <ul class="channel-nav fl">
+                    	<li><a href="/list-48" target="_blank">保护壳</a></li>
+                    	<li><a href="/list-49" target="_blank">保护套</a></li>
+                    	<li><a href="/list-50" target="_blank">贴膜</a></li>
+                    	<li><a href="/list-223" target="_blank">盒子专属配件</a></li>
+                    	<li><a href="/list-225" target="_blank">表带</a></li>
+                    	<li><a href="/list-227" target="_blank">电容笔</a></li>
+                </ul>
+                <div class="channel-more fr"><span></span><span></span><span></span>
+                	<a href="/list-47" target="_blank">更多</a><span></span><span></span><span></span>
+                </div>
+            </div>
+            <div class="b">
+            	<!--20160815 广告 start-->
+                <div class="span-232 fl">
+                    <ul class="grid-promo-list">
+                    			<!--20160815 小广告 start-->
+				                        <li class="grid-items grid-items-md">
+				                        	<a class="thumb" href="http://www.vmall.com/product/259735704.html" target="_blank">
+													<img data-lazy-src="http://res4.vmallres.com/pimages//frontLocation/content/775263/1475898757836.jpg" alt="" />
+				                        	</a>
+				                        </li>
+		                        <!--20160815 小广告 end-->
+                    			<!--20160815 小广告 start-->
+				                        <li class="grid-items grid-items-md">
+				                        	<a class="thumb" href="http://www.vmall.com/product/131091868.html" target="_blank">
+													<img data-lazy-src="http://res4.vmallres.com/pimages//frontLocation/content/775175/1475898794827.jpg" alt="" />
+				                        	</a>
+				                        </li>
+		                        <!--20160815 小广告 end-->
+                    			<!--20160815 小广告 start-->
+		                        <!--20160815 小广告 end-->
+                    			<!--20160815 小广告 start-->
+		                        <!--20160815 小广告 end-->
+                    			<!--20160815 小广告 start-->
+		                        <!--20160815 小广告 end-->
+                    			<!--20160815 小广告 start-->
+		                        <!--20160815 小广告 end-->
+                    			<!--20160815 小广告 start-->
+		                        <!--20160815 小广告 end-->
+                    			<!--20160815 小广告 start-->
+		                        <!--20160815 小广告 end-->
+                    			<!--20160815 小广告 start-->
+		                        <!--20160815 小广告 end-->
+                    			<!--20160815 小广告 start-->
+		                        <!--20160815 小广告 end-->
+                    </ul>
+                </div>
+                <!--20160815 广告 end-->
+                
+                <div class="span-968 fl">
+                    <ul class="grid-list">
+                        <!--通过添加current 来实现 hover效果-->
+                        <!--通过添加current 来实现 hover效果-->
+                        <!--通过添加current 来实现 hover效果-->
+                        <li class="grid-items">
+                            <a class="thumb" href="/product/2205.html#7701,0" target="_blank">
+                                <p class="grid-img">
+											<img data-lazy-src="http://res4.vmallres.com/pimages//frontLocation/content/775189/1475052369987.jpg" alt="荣耀小口哨" />
+                                </p>
+                                <h3 class="grid-title">荣耀小口哨</h3>
+                                <p class="grid-desc">金属机身 简约时尚设计&nbsp;</p>
+                                <p class="grid-price"><em>&yen;</em><span>199</span></p>
+                            </a>
+                        </li>
+                        <!--计算区域行中商品数量是否够了-->
+                        <!--通过添加current 来实现 hover效果-->
+                        <li class="grid-items">
+                            <a class="thumb" href="/product/812952235.html#221865572,0" target="_blank">
+                                <p class="grid-img">
+											<img data-lazy-src="http://res4.vmallres.com/pimages//frontLocation/content/775177/1474556633066.jpg" alt="荣耀引擎耳机2代" />
+                                </p>
+                                <h3 class="grid-title">荣耀引擎耳机2代</h3>
+                                <p class="grid-desc">物理调音 音质出色&nbsp;</p>
+                                <p class="grid-price"><em>&yen;</em><span>129</span></p>
+                            </a>
+                        </li>
+                        <!--计算区域行中商品数量是否够了-->
+                        <!--通过添加current 来实现 hover效果-->
+                        <li class="grid-items">
+                            <a class="thumb" href="/product/2247.html#4670,0" target="_blank">
+                                <p class="grid-img">
+											<img data-lazy-src="http://res4.vmallres.com/pimages//frontLocation/content/775207/1474556847976.jpg" alt="荣耀引擎耳机PLUS" />
+                                </p>
+                                <h3 class="grid-title">荣耀引擎耳机PLUS</h3>
+                                <p class="grid-desc">延续经典 好听 好品质&nbsp;</p>
+                                <p class="grid-price"><em>&yen;</em><span>89</span></p>
+                            </a>
+                        </li>
+                        <!--计算区域行中商品数量是否够了-->
+                        <!--通过添加current 来实现 hover效果-->
+                        <li class="grid-items">
+                            <a class="thumb" href="/product/2134.html#4911,0" target="_blank">
+                                <p class="grid-img">
+											<img data-lazy-src="http://res4.vmallres.com/pimages//frontLocation/content/775181/1475898963744.jpg" alt="小天鹅蓝牙音箱" />
+                                </p>
+                                <h3 class="grid-title">小天鹅蓝牙音箱</h3>
+                                <p class="grid-desc">形如天鹅 音如天籁&nbsp;</p>
+                                <p class="grid-price"><em>&yen;</em><span>99</span></p>
+                            </a>
+                        </li>
+                        <!--计算区域行中商品数量是否够了-->
+                        <!--通过添加current 来实现 hover效果-->
+                        <li class="grid-items">
+                            <a class="thumb" href="/product/3153.html#7587,0" target="_blank">
+                                <p class="grid-img">
+											<img data-lazy-src="http://res4.vmallres.com/pimages//frontLocation/content/775185/1475899132038.jpg" alt="华为5000mAh 移动电源" />
+                                </p>
+                                <h3 class="grid-title">华为5000mAh 移动电源</h3>
+                                <p class="grid-desc">时尚造型 纤薄实用&nbsp;</p>
+                                <p class="grid-price"><em>&yen;</em><span>89</span></p>
+                            </a>
+                        </li>
+                        <!--计算区域行中商品数量是否够了-->
+                        <!--通过添加current 来实现 hover效果-->
+                        <li class="grid-items">
+                            <a class="thumb" href="/product/104065115.html#247454610,0" target="_blank">
+                                <p class="grid-img">
+											<img data-lazy-src="http://res4.vmallres.com/pimages//frontLocation/content/775201/1474556815984.jpg" alt="华为 9V2A手机充电器" />
+                                </p>
+                                <h3 class="grid-title">华为 9V2A手机充电器</h3>
+                                <p class="grid-desc">高速快充 18W大功率&nbsp;</p>
+                                <p class="grid-price"><em>&yen;</em><span>69</span></p>
+                            </a>
+                        </li>
+                        <!--计算区域行中商品数量是否够了-->
+                        <!--通过添加current 来实现 hover效果-->
+                        <li class="grid-items">
+                            <a class="thumb" href="/product/3297.html#8151,0" target="_blank">
+                                <p class="grid-img">
+											<img data-lazy-src="http://res4.vmallres.com/pimages//frontLocation/content/775217/1474860865217.jpg" alt="荣耀Type C数据线" />
+                                </p>
+                                <h3 class="grid-title">荣耀Type C数据线</h3>
+                                <p class="grid-desc">高品质线芯 多层安全保护&nbsp;</p>
+                                <p class="grid-price"><em>&yen;</em><span>29</span></p>
+                            </a>
+                        </li>
+                        <!--计算区域行中商品数量是否够了-->
+                        <!--通过添加current 来实现 hover效果-->
+                        <li class="grid-items">
+                            <a class="thumb" href="/product/2747.html#7777,0" target="_blank">
+                                <p class="grid-img">
+											<img data-lazy-src="http://res4.vmallres.com/pimages//frontLocation/content/775225/1475899915106.jpg" alt="荣耀自拍杆" />
+                                </p>
+                                <h3 class="grid-title">荣耀自拍杆</h3>
+                                <p class="grid-desc">更多角度发现你的美&nbsp;</p>
+                                <p class="grid-price"><em>&yen;</em><span>40</span></p>
+                            </a>
+                        </li>
+                        <!--计算区域行中商品数量是否够了-->
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+<!-- 初始值 -->
+    <div class="layout">
+        <div class="home-channel-floor">
+            <div class="h">
+                <h2 class="channel-title fl">品牌配件</h2>
+                <ul class="channel-nav fl">
+                    	<li><a href="/list-55" target="_blank">音箱</a></li>
+                    	<li><a href="/list-56" target="_blank">移动电源</a></li>
+                    	<li><a href="/list-58" target="_blank">充电器/线材</a></li>
+                    	<li><a href="/list-83" target="_blank">U盘/存储卡</a></li>
+                    	<li><a href="/list-229" target="_blank">耳机</a></li>
+                    	<li><a href="/list-231" target="_blank">自拍杆/支架</a></li>
+                    	<li><a href="/list-233" target="_blank">排插</a></li>
+                    	<li><a href="/list-235" target="_blank">摄像机/镜头</a></li>
+                    	<li><a href="/list-239" target="_blank">智能硬件</a></li>
+                    	<li><a href="/list-237" target="_blank">生活周边</a></li>
+                </ul>
+                <div class="channel-more fr"><span></span><span></span><span></span>
+                	<a href="/list-54" target="_blank">更多</a><span></span><span></span><span></span>
+                </div>
+            </div>
+            <div class="b">
+            	<!--20160815 广告 start-->
+                <div class="span-232 fl">
+                    <ul class="grid-promo-list">
+                    			<!--20160815 小广告 start-->
+				                        <li class="grid-items grid-items-md">
+				                        	<a class="thumb" href="http://www.vmall.com/product/147786050.html" target="_blank">
+													<img data-lazy-src="http://res5.vmallres.com/pimages//frontLocation/content/775205/1474556844498.jpg" alt="" />
+				                        	</a>
+				                        </li>
+		                        <!--20160815 小广告 end-->
+                    			<!--20160815 小广告 start-->
+				                        <li class="grid-items grid-items-md">
+				                        	<a class="thumb" href="http://www.vmall.com/product/1569.html" target="_blank">
+													<img data-lazy-src="http://res5.vmallres.com/pimages//frontLocation/content/775215/1474556865972.jpg" alt="" />
+				                        	</a>
+				                        </li>
+		                        <!--20160815 小广告 end-->
+                    			<!--20160815 小广告 start-->
+		                        <!--20160815 小广告 end-->
+                    			<!--20160815 小广告 start-->
+		                        <!--20160815 小广告 end-->
+                    			<!--20160815 小广告 start-->
+		                        <!--20160815 小广告 end-->
+                    			<!--20160815 小广告 start-->
+		                        <!--20160815 小广告 end-->
+                    			<!--20160815 小广告 start-->
+		                        <!--20160815 小广告 end-->
+                    			<!--20160815 小广告 start-->
+		                        <!--20160815 小广告 end-->
+                    			<!--20160815 小广告 start-->
+		                        <!--20160815 小广告 end-->
+                    			<!--20160815 小广告 start-->
+		                        <!--20160815 小广告 end-->
+                    </ul>
+                </div>
+                <!--20160815 广告 end-->
+                
+                <div class="span-968 fl">
+                    <ul class="grid-list">
+                        <!--通过添加current 来实现 hover效果-->
+                        <!--通过添加current 来实现 hover效果-->
+                        <!--通过添加current 来实现 hover效果-->
+                        <li class="grid-items">
+                            <a class="thumb" href="/product/462874147.html#591692825,0" target="_blank">
+                                <p class="grid-img">
+											<img data-lazy-src="http://res5.vmallres.com/pimages//frontLocation/content/775293/1475057650520.jpg" alt="喜马拉雅随车听" />
+                                </p>
+                                <h3 class="grid-title">喜马拉雅随车听</h3>
+                                <p class="grid-desc">集音乐 充电 导航 FM调频于一体&nbsp;</p>
+                                <p class="grid-price"><em>&yen;</em><span>168</span></p>
+                                <p class="grid-tips">
+										<img data-lazy-src="http://res5.vmallres.com/pimages//tag/45/1474556767268.jpg" alt="喜马拉雅随车听 金属版（金色）"/>
+                                </p>
+                            </a>
+                        </li>
+                        <!--计算区域行中商品数量是否够了-->
+                        <!--通过添加current 来实现 hover效果-->
+                        <li class="grid-items">
+                            <a class="thumb" href="/product/874913960.html#138267749,0" target="_blank">
+                                <p class="grid-img">
+											<img data-lazy-src="http://res5.vmallres.com/pimages//frontLocation/content/775223/1474556915271.jpg" alt="暴风魔镜4  VR眼镜" />
+                                </p>
+                                <h3 class="grid-title">暴风魔镜4  VR眼镜</h3>
+                                <p class="grid-desc">一人独享IMAX巨幕3D影院&nbsp;</p>
+                                <p class="grid-price"><em>&yen;</em><span>199</span></p>
+                            </a>
+                        </li>
+                        <!--计算区域行中商品数量是否够了-->
+                        <!--通过添加current 来实现 hover效果-->
+                        <li class="grid-items">
+                            <a class="thumb" href="/product/1505.html#2669,0" target="_blank">
+                                <p class="grid-img">
+											<img data-lazy-src="http://res5.vmallres.com/pimages//frontLocation/content/775233/1474556981697.jpg" alt="BroadLink  WiFi智能插座" />
+                                </p>
+                                <h3 class="grid-title">BroadLink  WiFi智能插座</h3>
+                                <p class="grid-desc">远程控制 一键开关&nbsp;</p>
+                                <p class="grid-price"><em>&yen;</em><span>59</span></p>
+                                <p class="grid-tips">
+										<img data-lazy-src="http://res5.vmallres.com/pimages//tag/49/1474556795010.jpg" alt="BroadLink SP-mini  WiFi智能定时器开关插座（白色）"/>
+                                </p>
+                            </a>
+                        </li>
+                        <!--计算区域行中商品数量是否够了-->
+                        <!--通过添加current 来实现 hover效果-->
+                        <li class="grid-items">
+                            <a class="thumb" href="/product/2615.html#5908,0" target="_blank">
+                                <p class="grid-img">
+											<img data-lazy-src="http://res5.vmallres.com/pimages//frontLocation/content/775241/1474557032171.jpg" alt="锐力  WIFI摄像笔" />
+                                </p>
+                                <h3 class="grid-title">锐力  WIFI摄像笔</h3>
+                                <p class="grid-desc">书写录像两不误&nbsp;</p>
+                                <p class="grid-price"><em>&yen;</em><span>299</span></p>
+                            </a>
+                        </li>
+                        <!--计算区域行中商品数量是否够了-->
+                        <!--通过添加current 来实现 hover效果-->
+                        <li class="grid-items">
+                            <a class="thumb" href="/product/3171.html#7651,0" target="_blank">
+                                <p class="grid-img">
+											<img data-lazy-src="http://res5.vmallres.com/pimages//frontLocation/content/775257/1474557257178.jpg" alt="耐翔 USB3.0 手机U盘" />
+                                </p>
+                                <h3 class="grid-title">耐翔 USB3.0 手机U盘</h3>
+                                <p class="grid-desc">手机平板电脑三用&nbsp;</p>
+                                <p class="grid-price"><em>&yen;</em><span>98</span></p>
+                            </a>
+                        </li>
+                        <!--计算区域行中商品数量是否够了-->
+                        <!--通过添加current 来实现 hover效果-->
+                        <li class="grid-items">
+                            <a class="thumb" href="/product/668278010.html#936748450,0" target="_blank">
+                                <p class="grid-img">
+											<img data-lazy-src="http://res5.vmallres.com/pimages//frontLocation/content/775269/1474557318686.jpg" alt="缤特力  蓝牙耳机" />
+                                </p>
+                                <h3 class="grid-title">缤特力  蓝牙耳机</h3>
+                                <p class="grid-desc">通用型超长待机&nbsp;</p>
+                                <p class="grid-price"><em>&yen;</em><span>168</span></p>
+                            </a>
+                        </li>
+                        <!--计算区域行中商品数量是否够了-->
+                        <!--通过添加current 来实现 hover效果-->
+                        <li class="grid-items">
+                            <a class="thumb" href="/product/2254.html#4676,0" target="_blank">
+                                <p class="grid-img">
+											<img data-lazy-src="http://res5.vmallres.com/pimages//frontLocation/content/775275/1474557388051.jpg" alt="拙石 M8户外蓝牙音箱" />
+                                </p>
+                                <h3 class="grid-title">拙石 M8户外蓝牙音箱</h3>
+                                <p class="grid-desc">体积小巧 功能丰富&nbsp;</p>
+                                <p class="grid-price"><em>&yen;</em><span>299</span></p>
+                            </a>
+                        </li>
+                        <!--计算区域行中商品数量是否够了-->
+                        <!--通过添加current 来实现 hover效果-->
+                        <li class="grid-items">
+                            <a class="thumb" href="/product/2182.html#4424,0" target="_blank">
+                                <p class="grid-img">
+											<img data-lazy-src="http://res5.vmallres.com/pimages//frontLocation/content/775287/1474557469358.jpg" alt="闪迪  高速TF存储卡" />
+                                </p>
+                                <h3 class="grid-title">闪迪  高速TF存储卡</h3>
+                                <p class="grid-desc">读取速度高达48MB/秒&nbsp;</p>
+                                <p class="grid-price"><em>&yen;</em><span>25.90</span></p>
+                            </a>
+                        </li>
+                        <!--计算区域行中商品数量是否够了-->
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="hr-40"></div>
+    <div class="layout">
+    	<div class="ec-slider-item-img">
+    		<!-- 20130903-ad-762*132-start --><div class="ad fl"><a target="_blank" href="http://www.vmall.com/notice-657"><img src="http://res.vmallres.com/pimages//sale/2016-09/20160923092437178.jpg" title="实名认证" style="float:none;" /></a></div><!-- 20130903-ad-762*132-end -->
+    	</div>
+    </div>
+    <div class="hr-40"></div>
+</div>
+
+<textarea id="top-banner" class="hide">
+	<!-- 顶部banner -->
+	<div class="top-banner-max hide" id="top-banner-max">
+		<div class="top-banner-img">
+			
+			<a title="折叠" href="javascript:;" class="button-top-banner-min" id="top-banner-max-toggle">-</a>
+		</div>
+	</div>
+	<div class="top-banner-min hide" id="top-banner-min">
+		<div class="top-banner-img">
+			<p style="font-size:0;"><a style="display:block;position:relative;width:1920px;text-align:center;left:50%;background-color:#d1e7fe;margin-left:-960px;" title="HUAWEI Nova" target="_blank" href="http://mm.vmall.com/nova.html"><img src="http://res.vmallres.com/pimages//sale/2016-10/20161008143318106.jpg" title="HUAWEI Nova" /></a><br /></p>
+			<a title="展开" href="javascript:;" class="button-top-banner-max hide" id="top-banner-min-toggle">+</a>
+			<a class="button-top-banner-close" href="javascript:;" title="关闭" id="top-banner-min-close" onclick="javascript:$('#top-banner-block').hide();">关闭</a>
+		</div>
+	</div>
+	<!-- 顶部banner end -->
+</textarea>
+
+<script>
+ // 改为异步调用
+ // document.write('<script src="/serverTime.jsp?'+ new Date().getTime() +'"></' + 'script>');
+</script>
+
+<!-- 20160802-banner-hover效果 简易-end -->
+<script>
+    (function () {
+        $('.home-channel-container .grid-items').hover(function () {
+            $(this).addClass('current')
+        }, function () {
+            $(this).removeClass('current')
+
+        })
+    })()
+</script>
+
+<script src="http://res9.vmallres.com/20160920/js/index/index.min.js?20141025"></script>
+<script>
+(function (_ec) {
+//顶部banner
+	_ec.bigAd = false;
+	_ec.smallAd = true;
+	_ec.bigadShowTime = 8000;
+	_ec.now = new Date().format('yyyy-MM-dd HH:mm:ss');
+	
+	_ec.configNowTime = function(){
+		if(_serverTime)
+		{
+			_ec.now = new Date(_serverTime).format('yyyy-MM-dd HH:mm:ss');
+		}
+	}
+	
+	ec.load({
+		url : "/serverTime.jsp?"+(new Date()).getTime(),
+		type : "js",
+		loadType:"lazy",
+		onload : _ec.configNowTime
+	});
+})(ec.index);
+</script>
+<!--口号-20121025 -->
+<div class="slogan">
+	<ul>
+		<li class="s1"><i></i>500强企业&nbsp;品质保证</li>
+		<li class="s2"><i></i>7天退货&nbsp;15天换货</li>
+		<!-- <li class="s3"><i></i>99元起免运费</li> -->
+		<li class="s3"><i></i>
+			<span>99元起免运费</span>
+</li>
+		<li class="s4"><i></i>448家维修网点&nbsp;全国联保</li>
+	</ul>
+</div><!--口号-end -->
+<!--服务-20121025 -->
+<div class="service">
+		<dl class="s1">
+			<dt><i></i>帮助中心</dt>
+			<dd>
+				<ol>
+					<li><a target="_blank" href="http://www.vmall.com/help/faq-790.html">购物指南</a></li>
+					<li><a target="_blank" href="http://www.vmall.com/help/faq-814.html">配送方式</a></li>
+					<li><a target="_blank" href="http://www.vmall.com/help/faq-828.html">支付方式</a></li>
+					<li><a target="_blank" href="http://www.vmall.com/help/category-16.html">常见问题</a></li>
+				</ol>
+			</dd>
+		</dl>
+		<dl class="s2">
+			<dt><i></i>售后服务</dt>
+			<dd>
+				<ol>
+					<li><a target="_blank" href="http://www.vmall.com/help/faq-833.html">保修政策</a></li>
+					<li><a target="_blank" href="http://www.vmall.com/help/faq-834.html">退换货政策</a></li>
+					<li><a target="_blank" href="http://www.vmall.com/help/faq-835.html">退换货流程</a></li>
+					<li><a target="_blank" href="http://consumer.huawei.com/cn/support/warranty-query/index.htm">保修状态查询</a></li>
+				</ol>
+			</dd>
+		</dl>
+		<dl class="s3">
+			<dt><i></i>技术支持</dt>
+			<dd>
+				<ol>
+					<li><a target="_blank" href="http://consumer.huawei.com/cn/support/service-center/index.htm">售后网点</a></li>
+					<li><a target="_blank" href="http://consumer.huawei.com/cn/support/reservation/index.htm">预约维修</a></li>
+					<li><a target="_blank" href="http://consumer.huawei.com/cn/support/express-repair/index.htm">手机寄修服务</a></li>
+					<li><a target="_blank" href="http://consumer.huawei.com/cn/support/sparepart-price/index.htm">维修配件价格查询</a></li>
+					<li><a target="_blank" href="http://app.hicloud.com/">软件下载</a></li>
+				</ol>
+			</dd>
+		</dl>
+		<dl class="s4">
+			<dt><i></i>关于商城</dt>
+			<dd>
+				<ol>
+					<li><a target="_blank" href="http://www.vmall.com/help/faq-934.html">公司介绍</a></li>
+					<li><a target="_blank" href="http://www.vmall.com/help/faq-939.html">华为商城简介</a></li>
+					<li><a target="_blank" href="http://www.vmall.com/help/index.html">联系客服</a></li>
+				</ol>
+			</dd>
+		</dl>
+		<dl class="s5">
+			<dt><i></i>关注我们</dt>
+			<dd>
+				<ol>
+					<li><a class="sina" rel="nofollow" href="http://weibo.com/shophuawei" target="_blank">新浪微博</a></li>
+					<li><a class="qq" rel="nofollow" href="http://t.qq.com/shophuawei" target="_blank">腾讯微博</a></li>
+					<li><a class="huafen" href="http://club.huawei.com" target="_blank">花粉俱乐部</a></li>
+					<li><a href="http://www.vmall.com/appdownload" target="_blank">商城手机版</a></li>
+				</ol>
+			</dd>
+		</dl>
+</div>
+<!--服务-end -->
+
+<!--确认对话框-->
+<div id="ec_ui_confirm" class="popup-area popup-define-area hide">
+    <div class="b">
+        <p id="ec_ui_confirm_msg"></p>
+        <div class="popup-button-area"><a id="ec_ui_confirm_yes" href="javascript:;" class="button-action-yes" title="是"><span>是</span></a><a id="ec_ui_confirm_no" href="javascript:;" class="button-action-no" title="否"><span>否</span></a></div>
+    </div>
+    <div class="f"><s class="icon-arrow-down"></s></div>
+</div>
+
+<!--新确认对话框-->
+<div id="ec_ui_confirm_new" class="popup-area-new hide">
+	<div class="b">
+		<p id="ec_ui_confirm_new_msg"></p>
+		<div class="popup-button-area"><a id="ec_ui_confirm_new_yes" href="javascript:;" class="box-button-style-1" title="是"><span>是</span></a><a id="ec_ui_confirm_new_no" href="javascript:;" class="box-button-style-1" title="否"><span>否</span></a></div>
+	</div>
+	<div class="f"><s class="icon-arrow-down-new"></s></div>
+</div>
+
+<!--提示对话框-->
+<div id="ec_ui_tips" class="popup-area popup-define-area hide">
+    <div class="b">
+        <p id="ec_ui_tips_msg" class="tac"></p>
+        <div class="popup-button-area tac"><a id="ec_ui_tips_yes" href="javascript:;" class="button-action-yes" title="确定"><span>确定</span></a></div>
+    </div>
+    <div class="f"><s class="icon-arrow-down"></s></div>
+</div>
+
+<!--在线客服-->
+<div class="hungBar" id="tools-nav">
+	<a title="返回顶部" class="hungBar-top" href="#" id="hungBar-top">返回顶部</a>
+	<a id="tools-nav-survery" title="意见反馈" class="hungBar-feedback hide" href="javascript:;" onclick="ec.survery.open();">意见反馈</a>		
+	<a id="tools-nav-service-qq" title="QQ客服" class="hungBar-olcs-qq hide" href="http://wpa.qq.com/msgrd?V=1&Uin=4000886888" target="_blank">QQ客服</a>
+	<a id="tools-nav-service-robotim" href="javascript:;" title="在线客服" class="hungBar-olcs-web hide" target="_blank">在线客服</a>
+
+	<!--意见反馈box-->
+	<div id="survery-box" class="form-feedback-area hide">
+		<div class="h">
+			<a class="form-feedback-close" title="关闭" onclick="ec.survery.close();return false;" href="javascript:;"></a>
+		</div>
+		<div class="b">
+				<div class="form-edit-area">
+					<form onsubmit="return ec.survery.submit(this);" autocomplete="off">
+						<div class="form-edit-table">
+							<table cellspacing="0" cellpadding="0" border="0">
+								<tbody>
+							    <tr>
+                                    <td>
+                                        <b>疑问类型：</b>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <select id="type" name="type">
+                                        	<option>请选择疑问类型</option>
+                                            <option>商品质量（手机、平板等软、硬件质量）</option>
+                                            <option>商品缺货</option>
+                                            <option>物流发货（发货快慢、发错货、送件人态度等）</option>
+                                            <option>售后服务（服务网点、维修、退换货、客服）</option>
+                                            <option>网站问题（商城功能失效、不好用等）</option>    
+                                            <option>其他问题</option>    
+                                        </select>
+                                    </td>
+                                </tr>
+								
+								<tr>
+									<td><b>您的问题或建议：</b><span id="errMsg"></span></td>
+								</tr>
+								<tr>
+									<td><textarea class="textarea" type="textarea" name="content" id="surveryContent"></textarea></td>
+								</tr>
+								<tr>
+									<td>您的联系方式：</td>
+								</tr>
+								<tr>
+									<td><input type="text" class="text" name="contact" id="surveryContact"></td>
+								</tr>
+								<tr>
+									<td><div class="fl"><input type="text" name="code" id="surveryVerify" class="verify vam" maxlength="4">&nbsp;&nbsp;<img id="surveryVerifyImg" onclick="ec.survery.reloadCode()" class="vam" alt="验证码">&nbsp;&nbsp;&nbsp;&nbsp;<span class="vam"><a onclick="ec.survery.reloadCode();" href="javascript:;" class="u">看不清，换一张</a></span></div><div class="fr"><input type="submit" value="" class="button-action-submit-3"></div></td>
+								</tr>
+								</tbody>
+							</table>
+						</div>
+					</form>
+				</div>
+		</div>
+	</div>
+	
+</div>
+<div id="globleParameter" class="hide" context="" stylePath="http://res8.vmallres.com/20160920/css" scriptPath="http://res9.vmallres.com/20160920/js" imagePath="http://res.vmallres.com/20160920/images" mediaPath="http://res.vmallres.com/pimages/" ></div>
+<!--底部 -->
+
+<footer class="footer">
+    <!-- 20130902-底部-友情链接-start -->
+	<div class="footer-otherLink">
+		<p style="text-align:left;">友情链接： | <a href="http://www.huawei.com/cn/" target="_blank">华为官网</a> | <a href="http://consumer.huawei.com/cn/" target="_blank" style="line-height:1.5;">华为消费者业务</a><span style="line-height:1.5;"> </span><span style="line-height:1.5;">|</span><span style="line-height:1.5;"> </span><a href="http://www.honor.cn/" target="_blank" style="line-height:1.5;">荣耀官网</a><span style="line-height:1.5;"> | </span><a href="http://club.huawei.com/" target="_blank" textvalue="花粉俱乐部">花粉俱乐部</a><span style="line-height:1.5;"> | </span><a href="http://www.huaweimossel.com/" target="_blank" style="line-height:1.5;">莫塞尔商城</a><span style="line-height:1.5;"> | </span><a href="http://www.hwtrip.com/" target="_blank" style="line-height:1.5;">爱旅官网</a><span style="line-height:1.5;"> | </span><a href="http://app.vmall.com/" target="_blank" style="line-height:1.5;">华为应用市场</a><span style="line-height:1.5;"> | </span><a href="http://www.wbiao.cn/" target="_blank" style="line-height:1.5;">万表网</a><span style="line-height:1.5;"> | </span><a href="http://www.imobile.com.cn/" target="_blank" style="line-height:1.5;">手机之家</a><span style="line-height:1.5;"> | </span><a href="http://www.askci.com/" target="_blank" style="line-height:1.5;">中商情报网</a><span style="line-height:1.5;"> | </span><a href="http://www.zbird.com/" target="_blank" style="line-height:1.5;">钻石小鸟</a><span style="line-height:1.5;"> | </span><a href="http://www.shuame.com/" target="_blank" style="line-height:1.5;">刷机精灵</a><span style="line-height:1.5;"> | </span><a href="http://www.nduoa.com/" target="_blank" style="line-height:1.5;">安卓市场</a><span style="line-height:1.5;"> | </span><a href="http://www.17ugo.com/" target="_blank" style="line-height:1.5;">优购物</a><span style="line-height:1.5;">官网 | </span><a href="http://www.ydss.cn/" target="_blank" style="line-height:1.5;">移动叔叔</a><span style="line-height:1.5;"> | </span><a href="http://www.outlets365.com/" target="_blank" style="line-height:1.5;">奥特莱斯</a><span style="line-height:1.5;"> |</span></p><p style="text-align:left;"><a href="http://www.zol.com/" target="_blank">中关村商城</a> | <a href="http://www.kugou.com/" target="_blank">酷狗音乐</a> | <a href="http://m.vmall.com/" target="_blank" style="line-height:1.5;">华为商城手机版</a><span style="line-height:1.5;"> | </span><a href="http://www.3533.com/" target="_blank" style="line-height:1.5;">手机世界</a><span style="line-height:1.5;"> | </span><a href="http://www.958shop.com/" target="_blank" style="line-height:1.5;">百信手机网</a><span style="line-height:1.5;"> | </span><a href="http://www.youboy.com/" target="_blank" style="line-height:1.5;">一呼百应网</a><span style="line-height:1.5;"> | </span><a href="http://www.cardbaobao.com/" target="_blank" style="line-height:1.5;">卡宝宝网</a><span style="line-height:1.5;"> | </span><a href="http://www.duote.com" target="_blank" textvalue="多特软件下载">多特软件下载</a><span style="line-height:1.5;"> </span><span style="line-height:1.5;">| </span><a href="http://www.hitao.com/" target="_blank" style="line-height:1.5;">嗨淘网</a><span style="line-height:1.5;"> | </span><a href="http://www.tongbu.com/" target="_blank" style="line-height:1.5;">同步助手</a><span style="line-height:1.5;"> | </span><a href="http://www.fengniao.com/" target="_blank" style="line-height:1.5;">蜂鸟摄影网</a><span style="line-height:1.5;"> | </span><a href="http://www.7po.com/" target="_blank" style="line-height:1.5;">奇珀论坛</a><span style="line-height:1.5;"> | </span><a href="http://www.homekoo.com/" target="_blank" style="line-height:1.5;">家具商城</a><span style="line-height:1.5;"> | </span><a href="http://www.xbiao.com/" target="_blank" style="line-height:1.5;">世界名表</a><span style="line-height:1.5;"> | </span><a href="http://www.paixie.net/" target="_blank" style="line-height:1.5;">拍鞋网</a><span style="line-height:1.5;">商城</span><span style="line-height:1.5;"> | </span><a href="http://www.obolee.com/" target="_blank" style="line-height:1.5;">欧宝丽珠宝</a><span style="line-height:1.5;"> | </span><a href="http://www.xungou.com/" target="_blank" style="line-height:1.5;">寻购网</a><span style="line-height:1.5;"> </span><span style="line-height:1.5;"></span><span style="line-height:1.5;"></span><span style="line-height:1.5;">|</span></p><p style="text-align:left;"><a href="http://www.jiukuaiyou.com/" target="_blank">九块邮官网</a> | <a href="http://www.mumayi.com/" target="_blank">安卓游戏</a> | <a href="http://baike.1688.com/" target="_blank">阿里巴巴生意经</a> | <a href="http://product.cnmo.com/" target="_blank">手机大全</a> | <a href="http://www.anzow.com/" target="_blank">安卓软件园</a> | <a href="http://www.dashi.com/" target="_blank">卓大师刷机</a> | <a href="http://www.wpxap.com/" target="_blank">智机论坛</a> | <a href="http://www.eepw.com.cn/" target="_blank">电子产品世界</a> | <a href="http://www.liqucn.com/" target="_blank">历趣网</a> | <a href="http://www.51bi.com/" target="_blank">网购返利</a> | <a href="http://cn.china.cn/" target="_blank">中国供应商</a> | <a href="http://www.apple110.com/" target="_blank" title="Apple110">Apple110</a> | <a href="http://www.91.com/" target="_blank" textvalue="91手机门户网">91.手机门户网</a> <span style="line-height:1.5;"></span><span style="line-height:1.5;">| </span><a href="http://www.in189.com/" target="_blank" textvalue="添翼圈社区">添翼圈社区</a> <span style="line-height:1.5;"></span><span style="line-height:1.5;">| </span><a href="http://www.egou.com/" target="_blank" style="line-height:1.5;">易购官网</a><span style="line-height:1.5;"> </span><span style="line-height:1.5;">|</span><span style="line-height:1.5;"> </span><a href="http://www.meilele.com/" target="_blank" textvalue="美乐乐家具网">美乐乐家具网</a><span style="line-height:1.5;"> | </span></p><p style="text-align:left;"><a href="http://www.znds.com" target="_blank" style="line-height:1.5;">智能电视网</a><span style="line-height:1.5;"> </span><span style="line-height:1.5;">| </span><a href="http://m.kuaidi100.com/index_all.html" target="_blank" title="快递查询" textvalue="快递查询">快递查询</a> <span style="line-height:1.5;">|</span><span style="line-height:1.5;"> </span><a href="http://www.yzmg.com/" target="_blank" style="line-height:1.5;">亿智蘑菇</a>手机网<span style="line-height:1.5;"> </span><span style="line-height:1.5;">|</span><span style="line-height:1.5;"> </span><a href="http://www.uc.cn/" target="_blank" style="line-height:1.5;">UC浏览器</a><span style="line-height:1.5;"> </span><span style="line-height:1.5;">| </span><a href="http://www.vmall.com/recycle" target="_blank" textvalue="以旧换新" style="line-height:1.5;">以旧换新</a><span style="line-height:1.5;"><span style="line-height:1.5;"> | <a href="http://www.vmall.com" target="_blank" textvalue="华为P9">华为P9</a> | 携程<a href="http://car.ctrip.com" target="_blank">租车</a> | <a href="http://www.wandoujia.com" target="_blank">安卓市场</a> | </span></span><a href="http://www.vmall.com/links" target="_blank" style="line-height:1.5;color:#ff0000;">申请链接 &gt;&gt;</a></p><p style="text-align:left;"><span style="line-height:1.5;"></span></p>
+	</div>
+	<div class="footer-warrant-area"><p><a textvalue="隐私政策" title="隐私政策" target="_blank" href="http://www.vmall.com/help/faq-2635.html">隐私政策</a>  <a title="服务协议" target="_blank" href="http://www.vmall.com/help/faq-778.html">服务协议</a>        Copyright © 2012-2016  VMALL.COM   版权所有  保留一切权利</p><p><a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=32011402010009"><img style="width:20px;height:20px;float:none;" src="http://res.vmallres.com/pimages//template/content/2016/20160226162651249.png" title="公安备案" width="20" vspace="0" border="0" hspace="0" height="20" /><span style="font-size:15px;font-family:宋体"><span style="font-size:12px;font-family:arial,helvetica,sans-serif;"> 苏公网安备</span><span style="font-size:12px;font-family:arial,helvetica,sans-serif;"> 32011402010009号</span></span></a> | <a target="_blank" href="http://www.miitbeian.gov.cn">苏ICP备09062682号-9</a> | 增值电信业务经营许可证：苏B2-20130048 | <a href="http://res.vmallres.com/pimages//sale/2016-10/20161009102851799.jpg" target="_blank" textvalue="网络文化经营许可证：苏网文[2012]0401-019号">网络文化经营许可证：苏网文[2015] 1599-026号</a></p><p><br /><a target="_blank" href="http://res.vmallres.com/certificate/wwwz.jpg"></a></p><p><a target="_blank" href="http://www.jsgsj.gov.cn:60103/businessCheck/verifKey.do?serial=320100913201147770231720001001-SAIC_SHOW_32000020160129102316602&amp;signData=MEUCIQDjstcg6fPylz+uES4LNTcBpBVlZujS8l5erIgXiDGw1QIgfHZFK11kZ1vB2enLCwvaslyfE1fztpB19AEK4hlwibo="><img src="http://res.vmallres.com/pimages//template/content/2016/20160226162415360.png" style="float:none;width:90px;height:32px;" title="电子营业执照" width="90" vspace="0" border="0" hspace="0" height="32" /></a>   <a target="_blank" href="https://ss.knet.cn/verifyseal.dll?sn=e13010932010038497pwz6000000&amp;trustKey=dn&amp;trustValue=vmall.com"><img style="width:90px;height:32px;float:none;" src="http://res.vmallres.com/pimages//template/content/2016/20160226162521265.png" title="可信网站" width="90" vspace="0" border="0" hspace="0" height="32" /></a>   <a target="_blank" href="https://search.szfw.org/cert/l/CX20121017001773002082"><img style="width:90px;height:32px;float:none;" src="http://res.vmallres.com/pimages//template/content/2016/20160226162531395.png" title="诚信网站" width="90" vspace="0" border="0" hspace="0" height="32" /></a></p></div><!--授权结束 --><script>
+//客服工具
+//ec.code.addService({showService : true , showTools : true});
+ec.code.addAnalytics({
+  baidu : true,
+  google : false,
+  hicloud : true,
+  cnzz : false,
+  suning : false,
+  dmp:true
+});</script>
+</footer>
+
+
+</body>
+</html>
