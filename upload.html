@@ -3,33 +3,44 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
  </head>
  <body>
-<button value="yo", onclick="sendInt()">xxx</button>
+<button onclick="login()">login</button>
+<button onclick="query()">query</button>
+<button onclick="insert()">insert</button>
 <input type="file" id="myfile" multiple />
  内容展示：
 <div id="socket"></div>
 <div id="destination"></div>
  </body>
 	<script type="text/javascript">
-	var ws = new WebSocket("ws://localhost:8891/websocket");
+	var ws = new WebSocket("ws://localhost:8003/websocket");
 	var info = document.getElementById('socket');
-	var dest = document.getElementById('destination');
+	var resp = document.getElementById('destination');
 	var lines;
 	var buf = "";
 	ws.onopen = function(e){info.innerHTML = "opened";};
 	ws.onclose = function(e){info.innerHTML = "closed";};
-	ws.onmessage = function(e){info.innerHTML += e.data;};
+	ws.onmessage = function(e){resp.innerHTML += e.data+"<p>";};
 	ws.onerror = function(e){info.innerHTML = e.data;};
 	ws.onprogress = function(e){info.innerHTML = e.data;};
 	document.getElementById('myfile').addEventListener('change', function(){
 		var file = this.files[0];
-		var dest = document.getElementById('destination');
+		var resp = document.getElementById('destination');
 		var reader = new FileReader();
 		reader.onload = function(e){
 			content = e.target.result;
 			lines = content.split("\n");
 		};
 		reader.readAsText(file);
-	});		
+	});	
+	function login(){
+		ws.send("login");
+	};
+	function query(){
+		ws.send("query");
+	};
+	function insert(){
+		sendFile();
+	};
 	function sendt(){
 		line = lines.pop();
 		ws.send(line);
@@ -38,15 +49,15 @@
 		sendFile();
 	};
 	function sendFile(){	
-		while (lines.length > 0 ){
+		while (lines.length > 0){
 			if (ws.bufferedAmount > 0){
 				setTimeout(sendFile, 10);
 				console.log("busy, wait.");
 				return;
 			}
 			line = lines.shift();
-			dest.innerHTML += line;
-			ws.send(line);
+			resp.innerHTML += "send " + line + "<p>";
+			ws.send("upload:" + line);
 		}
 	};
 	</script>

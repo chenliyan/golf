@@ -1,10 +1,11 @@
--module(ws_server).
--export([start/0, start/1]).
+-module(ws).
+-export([start/1]).
 
-start() ->
-	start(8889).
-	
 start(Port) ->
+	spawn(fun() -> start(Port, 1) end).
+	
+start(Port,Ver) ->
+	io:format("ws ~w start~n", [Ver]),
 	{ok, Listen} = gen_tcp:listen(Port, [{packet,raw}, {reuseaddr,true}, {active, true}]),
 	accept(Listen).
 	
@@ -27,7 +28,7 @@ ws_establish(Socket) ->
              "\r\n",<<>>],
 		gen_tcp:send(Socket, Handshake),
 		send_data(Socket, "here could send time"),
-		Pid = spawn(fun() -> agr:init() end),
+		Pid = spawn(role, init, [self()]),
 		loop(Socket, Pid);
 	_Any ->
 		ws_establish(Socket)
@@ -35,17 +36,16 @@ ws_establish(Socket) ->
 loop(Socket, Pid) ->
 	receive
 		{tcp, Socket, Data} ->
-			Text = websocket_data(Data),
-			send_data(Socket, "check"),
-			Pid ! {self(), Data},
-			io:format("server get data ~s", Data),
+			Bin = websocket_data(Data),
+			Pid ! {self(), data, Bin},
 			loop(Socket, Pid);
-		{error, closed} ->
-			ok;
-		{From, Ret} ->
-			send_data(Socket, Ret),
+		{tcp_closed, Socket} ->
+			Pid ! {self(), close};
+		{Pid, data, Text} ->
+			send_data(Socket, Text),
 			loop(Socket, Pid);
 		_Any ->
+			io:format("ws.unrecog~w~n", [_Any]),
 			loop(Socket, Pid)
 	end.
 	
