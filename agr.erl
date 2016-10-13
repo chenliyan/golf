@@ -26,23 +26,19 @@ upload(AgrId, CerId, Name) ->
 query() ->
 	query(agr_info).
 query(Tab) ->
-	lists:foldl(  
-		fun(Key, Acc) ->  
-			[Result] = mnesia:dirty_read(Tab, Key),  
-			List = tuple_to_list(Result),
-			FilledList = lists:filter(fun(T) -> case T of 
-										undefined -> false;
-										agr_info  -> false;
-										_         -> true
-								   end
-						 end,
-						 List),
-			 
-			lists:append(FilledList, Acc)  
-		end, [], mnesia:dirty_all_keys(Tab)).  
+	lists:flatmap(  
+		fun(Key) ->  
+			[Result] = mnesia:dirty_read(Tab, Key),
+			lists:flatmap(fun(C) ->
+							case C of
+								agr_info -> [];
+								undefined -> [","];								
+								_ -> [binary_to_list(C),","]
+							end
+			             end, tuple_to_list(Result)) ++ "\n"
+		end, mnesia:dirty_all_keys(Tab)).  
 test() ->
 	List = ["ABC"],
-	[io:format("1~p~n", T) || T <- List],
-	lists:foldl(fun(T,Acc) -> [T,"yo"|Acc] end, [], List).
+	lists:flatmap(fun(T,Acc) -> [T,"yo"|Acc] end, [], List).
 delimeter(T, Acc) ->
 	[T|Acc].
