@@ -3,7 +3,7 @@
 init(From) ->
 	login(From).
 login(From) ->
-	From ! {self(), data, "Enter username and password."},
+	From ! {self(), data, "pls login"},
 	receive
 		{From, data, <<"login",End/binary>>} ->
 			From ! {self(), data, "login success."},
@@ -18,23 +18,19 @@ login(From) ->
 loop(From) ->
 	receive
 		{From, data, <<"query">>} ->
-			Alldata = query_all(),
+			Alldata = agr:query(),
 			From ! {self(), data, Alldata},
 			loop(From);
 		{From, data, <<"query:", CerId:18/binary>>} ->
 			loop(From);
-		{From, data, <<"upload:",CerId:18/binary, Name/binary>>} ->
-			Ret = insert(),
-			From ! {self(), data, Ret},
+		{From, data, <<"upload:",AgrId:13/binary,",",CerId:18/binary, ",", Name/binary>>} ->
+			Ret = agr:upload(AgrId, CerId, Name),
+			From ! {self(), data, <<"resp,",AgrId/binary,",good">>},
 			loop(From);
 		{From, data, Unknown} ->
 			io:format("role.unknon~w~n", [Unknown]),
 			loop(From)
 	end.
-query_all() ->
-	agr:query().
 	
-insert() ->
-	io:format("role.insert~n"),
-	"insert good".
+
 	

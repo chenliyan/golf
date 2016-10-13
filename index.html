@@ -1,0 +1,83 @@
+<html>
+<body>
+status:<text id="status"></text><p>
+upfile:<input type="file" id="myfile" multiple />
+<button onclick="login()">login</button>
+<button onclick="upload()">upload</button>
+<table id="main"></table>
+</body>
+<script>
+var ws = new WebSocket("ws://localhost:8003/websocket");
+var info = document.getElementById('status');
+var tabl = document.getElementById('main');
+var lines;
+var cursor;
+ws.onopen = function(e){info.innerHTML = "opened";};
+ws.onclose = function(e){info.innerHTML = "closed";};
+ws.onmessage = function(e){onMessage(e.data);};
+ws.onerror = function(e){info.innerHTML = e.data;};
+ws.onprogress = function(e){info.innerHTML = e.data;};
+document.getElementById('myfile').addEventListener('change', function(){
+	var file = this.files[0];
+	var tabl = document.getElementById('main');
+	var reader = new FileReader();
+	reader.onload = function(e){
+		header = tabl.insertRow();
+		agr_id = header.insertCell();
+		cer_id = header.insertCell();
+		cer_name = header.insertCell();
+		agr_id.innerHTML = "agr_id";
+		cer_id.innerHTML = "cer_id";
+		cer_name.innerHTML = "cer_name";
+		content = e.target.result;
+		lines = content.split("\n");
+		while (lines.length > 0){
+			line = lines.shift();
+			if (line.length == 0){
+				continue;
+			}
+			colums = line.split(",");
+			role = tabl.insertRow();
+			role.id = colums[0];
+			while (colums.length > 0){
+				colum = colums.shift();
+				cell = role.insertCell();
+				cell.innerHTML = colum;
+			}
+		}
+	};
+	reader.readAsText(file);
+});	
+function onMessage(m){
+	parse = m.split(",");
+	cmd = parse.shift();
+	if (cmd == "resp"){
+		onResp(parse);
+	}
+};
+function onResp(m){
+	key = m.shift();
+	rst = m.shift();
+	role = document.getElementById(key);
+	agrId = role.insertCell();
+	agrId.innerHTML = rst;
+};
+function upload(){
+	if (cursor == null){
+		cursor = tabl.rows[1];
+	}
+	while (cursor != null){
+		if (ws.bufferedAmount > 0){
+				setTimeout(upload, 10);
+				console.log("busy, wait.");
+				return;
+		}
+		ws.send("upload:" + cursor.cells[0].innerHTML + "," + cursor.cells[1].innerHTML + "," + cursor.cells[2].innerHTML);
+		cursor = cursor.nextSibling;
+	}
+};
+function login(){
+	ws.send("login");
+}
+</script>
+</html>

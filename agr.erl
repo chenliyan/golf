@@ -1,5 +1,5 @@
 -module(agr).
--export([init/1, start/0, upload/2,query/0]).
+-export([init/1, start/0, upload/3,query/0]).
 
 -record(agr_info, {agr_id, cer_id, name, card_id,status,  county, inst, time}).
 -record(cer_info, {cer_id, name, status, time}).
@@ -20,14 +20,14 @@ init(From) ->
 			init(From),
 			ok
 	end.
-upload(Id, Name) ->
-	Tmp = #cer_info{cer_id = Id, name = Name},
+upload(AgrId, CerId, Name) ->
+	Tmp = #agr_info{agr_id = AgrId, cer_id = CerId, name = Name},
 	mnesia:dirty_write(Tmp).
 query() ->
 	query(cer_info).
 query(Tab) ->
 	lists:foldl(  
-    fun(Key, Acc) ->  
-        [Result] = mnesia:dirty_read(Tab, Key),  
-        [Result|Acc]  
-    end, [], mnesia:dirty_all_keys(Tab)).  
+		fun(Key, Acc) ->  
+			[Result] = mnesia:dirty_read(Tab, Key),  
+			[Result|Acc]  
+		end, [], mnesia:dirty_all_keys(Tab)).  
