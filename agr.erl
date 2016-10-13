@@ -1,5 +1,5 @@
 -module(agr).
--export([init/1, start/0, upload/3,query/0]).
+-export([init/1, start/0, upload/3,query/0,test/0]).
 
 -record(agr_info, {agr_id, cer_id, name, card_id,status,  county, inst, time}).
 -record(cer_info, {cer_id, name, status, time}).
@@ -24,10 +24,25 @@ upload(AgrId, CerId, Name) ->
 	Tmp = #agr_info{agr_id = AgrId, cer_id = CerId, name = Name},
 	mnesia:dirty_write(Tmp).
 query() ->
-	query(cer_info).
+	query(agr_info).
 query(Tab) ->
 	lists:foldl(  
 		fun(Key, Acc) ->  
 			[Result] = mnesia:dirty_read(Tab, Key),  
-			[Result|Acc]  
+			List = tuple_to_list(Result),
+			FilledList = lists:filter(fun(T) -> case T of 
+										undefined -> false;
+										agr_info  -> false;
+										_         -> true
+								   end
+						 end,
+						 List),
+			 
+			lists:append(FilledList, Acc)  
 		end, [], mnesia:dirty_all_keys(Tab)).  
+test() ->
+	List = ["ABC"],
+	[io:format("1~p~n", T) || T <- List],
+	lists:foldl(fun(T,Acc) -> [T,"yo"|Acc] end, [], List).
+delimeter(T, Acc) ->
+	[T|Acc].

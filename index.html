@@ -4,6 +4,7 @@ status:<text id="status"></text><p>
 upfile:<input type="file" id="myfile" multiple />
 <button onclick="login()">login</button>
 <button onclick="upload()">upload</button>
+<button onclick="query()">query</button>
 <table id="main"></table>
 </body>
 <script>
@@ -78,6 +79,9 @@ function upload(){
 };
 function login(){
 	ws.send("login");
+}
+function query(){
+	ws.send("query");
 }
 </script>
 </html>
