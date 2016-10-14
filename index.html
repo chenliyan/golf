@@ -4,11 +4,11 @@ status:<text id="status"></text><p>
 upfile:<input type="file" id="myfile" multiple />
 <button onclick="login()">login</button>
 <button onclick="upload()">upload</button>
-<button onclick="query()">query</button>
+<button onclick="check()">check</button>
 <table id="main"></table>
 </body>
 <script>
-var ws = new WebSocket("ws://localhost:8000/websocket");
+var ws = new WebSocket("ws://localhost:8003/websocket");
 var info = document.getElementById('status');
 var tabl = document.getElementById('main');
 var lines;
@@ -23,6 +23,8 @@ document.getElementById('myfile').addEventListener('change', function(){
 	var tabl = document.getElementById('main');
 	var reader = new FileReader();
 	reader.onload = function(e){
+		var all_agr_id = new Array();
+		var all_cer_id = new Array();
 		header = tabl.insertRow();
 		agr_id = header.insertCell();
 		cer_id = header.insertCell();
@@ -40,12 +42,22 @@ document.getElementById('myfile').addEventListener('change', function(){
 			colums = line.split(",");
 			role = tabl.insertRow();
 			role.id = colums[0];
-			while (colums.length > 0){
-				colum = colums.shift();
-				cell = role.insertCell();
-				cell.innerHTML = colum;
+			if (colums.length == 0){
+				continue;
 			}
+			agr_id = colums.shift();
+			all_agr_id.push(agr_id);
+			cell = role.insertCell().innerHTML = agr_id;
+			
+			cer_id = colums.shift();
+			all_agr_id.push(cer_id);
+			cell = role.insertCell().innerHTML = cer_id;
+			
+			cer_name = colums.shift();
+			cell = role.insertCell().innerHTML = cer_name;
 		}
+		check_unique(all_agr_id);
+		check_unique(all_cer_id);
 	};
 	reader.readAsText(file);
 });	
@@ -55,6 +67,12 @@ function onMessage(m){
 	if (cmd == "resp"){
 		onResp(parse);
 	}
+	else if(cmd == "rest"){
+		onRest(parse);
+	
+	}else{
+		console.log("unknown data.");
+	}
 };
 function onResp(m){
 	key = m.shift();
@@ -63,13 +81,20 @@ function onResp(m){
 	agrId = role.insertCell();
 	agrId.innerHTML = rst;
 };
+function onRest(m){
+	row = tabl.insertRow();
+	row.insertCell().innerHTML = m.shift();
+	row.insertCell().innerHTML = m.shift();
+	row.insertCell().innerHTML = m.shift();
+	row.insertCell().innerHTML = m.shift();
+};
 function upload(){
 	if (cursor == null){
 		cursor = tabl.rows[1];
 	}
 	while (cursor != null){
 		if (ws.bufferedAmount > 0){
-				setTimeout(upload, 10);
+				setTimeout(upload, 1);
 				console.log("busy, wait.");
 				return;
 		}
@@ -79,9 +104,31 @@ function upload(){
 };
 function login(){
 	ws.send("login");
-}
-function query(){
-	ws.send("query");
+};
+function check(){	
+	if (cursor == null){
+		cursor = tabl.rows[1];
+	}
+	while (cursor != null){
+		if (ws.bufferedAmount > 0){
+				setTimeout(upload, 10);
+				console.log("busy, wait.");
+				return;
+		}
+		ws.send("check:" + cursor.cells[0].innerHTML + "," + cursor.cells[1].innerHTML + "," + cursor.cells[2].innerHTML);
+		cursor = cursor.nextSibling;
+	}
+};
+function check_unique(array){
+	array.sort();
+	curr = array.shift();
+	while (array.length > 0){
+		next = array.shift();
+		if (curr == next){
+			alert(curr);
+		}
+		curr = next;
+	}
 }
 </script>
 </html>
