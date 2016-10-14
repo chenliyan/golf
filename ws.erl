@@ -18,20 +18,22 @@ accept(Listen) ->
 ws_establish(Socket) ->
 	receive
 		{tcp, Socket, Data} ->
-		Key = list_to_binary(lists:last(string:tokens(hd(lists:filter(fun(S) -> lists:prefix("Sec-WebSocket-Key:", S) end, string:tokens(Data, "\r\n"))), ": "))),
-		Challenge = base64:encode(crypto:sha(<< Key/binary, "258EAFA5-E914-47DA-95CA-C5AB0DC85B11" >>)),
-		Handshake =
-            ["HTTP/1.1 101 Switching Protocols\r\n",
-             "connection: Upgrade\r\n",
-             "upgrade: websocket\r\n",
-             "sec-websocket-accept: ", Challenge, "\r\n",
-             "\r\n",<<>>],
-		gen_tcp:send(Socket, Handshake),
-		send_data(Socket, "here could send time"),
-		Pid = spawn(role, init, [self()]),
-		loop(Socket, Pid);
-	_Any ->
-		ws_establish(Socket)
+			Key = list_to_binary(lists:last(string:tokens(hd(lists:filter(fun(S) -> lists:prefix("Sec-WebSocket-Key:", S) end, string:tokens(Data, "\r\n"))), ": "))),
+			Challenge = base64:encode(crypto:sha(<< Key/binary, "258EAFA5-E914-47DA-95CA-C5AB0DC85B11" >>)),
+			Handshake =
+				["HTTP/1.1 101 Switching Protocols\r\n",
+				 "connection: Upgrade\r\n",
+				 "upgrade: websocket\r\n",
+				 "sec-websocket-accept: ", Challenge, "\r\n",
+				 "\r\n",<<>>],
+			gen_tcp:send(Socket, Handshake),
+			send_data(Socket, "here could send time"),
+			Pid = spawn(role, init, [self()]),
+			io:format("ws.spawn.role[~w]~n", [Pid]),
+			loop(Socket, Pid);
+		_Any ->
+			io:format("ws.abnormal~n"),
+			ws_establish(Socket)
 	end.
 loop(Socket, Pid) ->
 	receive
@@ -40,7 +42,8 @@ loop(Socket, Pid) ->
 			Pid ! {self(), data, Bin},
 			loop(Socket, Pid);
 		{tcp_closed, Socket} ->
-			Pid ! {self(), close};
+			Pid ! {self(), close},
+			io:format("ws.gohome~n");
 		{Pid, data, Text} ->
 			send_data(Socket, Text),
 			loop(Socket, Pid);

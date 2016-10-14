@@ -31,7 +31,21 @@ upload(AgrId, CerId, Name) ->
 			existed
 	end.
 cims(MyPid, CerId, Name) ->
-	MyPid ! {role, CerId, cer_ok}.
+	Ret = 
+	case mnesia:dirty_read(cer_info, CerId) of
+		[] ->
+			Cer = #cer_info{cer_id = CerId, 
+			                name = Name, 
+							status = <<"ok">>, 
+							time = calendar:now_to_local_time(erlang:now())},	
+			mnesia:dirty_write(Cer),
+			cer_ok;
+		[{cer_info, CerId, Name, Status, Time}] ->
+			cer_ok;
+		[{cer_info, CerId, _, Status, Time}] ->
+			cer_dismatch			
+	end,
+	MyPid ! {role, CerId, Ret}.
 query() ->
 	query(agr_info).
 query(Tab) ->
