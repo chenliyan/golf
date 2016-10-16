@@ -1,5 +1,5 @@
 -module(agr).
--export([init/1, start/0, upload/3,query/0,cims/3]).
+-export([init/1, start/0, upload/6,query/0,cims/3]).
 
 -record(agr_info, {agr_id, cer_id, name, card_id,status,  county, inst, time}).
 -record(cer_info, {cer_id, name, status, time}).
@@ -20,11 +20,22 @@ init(From) ->
 			init(From),
 			ok
 	end.
-upload(AgrId, CerId, Name) ->
+upload(AgrId, CerId, Name, County, Inst, Option) ->
+	Tmp = #agr_info{agr_id = AgrId, cer_id = CerId, name = Name,
+					card_id = [], status = [],  
+					county = County, 
+					inst = Inst, 
+					time = calendar:now_to_local_time(erlang:now())},
+	case Option of 
+		<<"force">> ->
+			mnesia:dirty_write(Tmp);
+		_ ->
+			upload(AgrId, Tmp)
+	end.
+upload(AgrId, Tmp) ->
 	Ori = mnesia:dirty_read(agr_info, AgrId),
 	case Ori of
 		[] ->			
-			Tmp = #agr_info{agr_id = AgrId, cer_id = CerId, name = Name},
 			mnesia:dirty_write(Tmp),
 			ok;
 		_ ->
@@ -45,7 +56,7 @@ cims(MyPid, CerId, Name) ->
 		[{cer_info, CerId, _, Status, Time}] ->
 			cer_dismatch			
 	end,
-	MyPid ! {role, CerId, Ret}.
+	MyPid ! {agr, CerId, Ret}.
 query() ->
 	query(agr_info).
 query(Tab) ->
@@ -67,3 +78,21 @@ test() ->
 	lists:flatmap(fun(T,Acc) -> [T,"yo"|Acc] end, [], List).
 delimeter(T, Acc) ->
 	[T|Acc].
+	
+	
+	
+yo() ->
+	F = fun() ->
+
+MatchHead = #agr_info{ _ = '_' },
+
+Guard = [],
+
+Result = ['$_'],
+
+mnesia:select(y_account, [{MatchHead, Guard, Result}])
+
+end,
+
+mnesia:transaction(F).
+	

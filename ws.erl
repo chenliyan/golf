@@ -6,7 +6,7 @@ start(Port) ->
 	
 start(Port,Ver) ->
 	io:format("ws ~w start~n", [Ver]),
-	{ok, Listen} = gen_tcp:listen(Port, [{packet,raw}, {reuseaddr,true}, {active, true}]),
+	{ok, Listen} = gen_tcp:listen(Port, [{packet,raw}, {reuseaddr,true}, {active, once}]),
 	accept(Listen).
 	
 accept(Listen) ->
@@ -28,8 +28,9 @@ ws_establish(Socket) ->
 				 "\r\n",<<>>],
 			gen_tcp:send(Socket, Handshake),
 			send_data(Socket, "here could send time"),
-			Pid = spawn(role, init, [self()]),
+			Pid = spawn_link(role, init, [self()]),
 			io:format("ws.spawn.role[~w]~n", [Pid]),
+			inet:setopts(Socket, [{active, once}]),
 			loop(Socket, Pid);
 		_Any ->
 			io:format("ws.abnormal~n"),
@@ -38,8 +39,9 @@ ws_establish(Socket) ->
 loop(Socket, Pid) ->
 	receive
 		{tcp, Socket, Data} ->
-			Bin = websocket_data(Data),
-			Pid ! {self(), data, Bin},
+			Bins = websocket_data(Data),
+			[Pid ! {self(), data, Bin} || Bin <- Bins],
+			inet:setopts(Socket, [{active, once}]),
 			loop(Socket, Pid);
 		{tcp_closed, Socket} ->
 			Pid ! {self(), close},
@@ -55,9 +57,10 @@ loop(Socket, Pid) ->
 websocket_data(Data) when is_list(Data) ->
     websocket_data(list_to_binary(Data));
 websocket_data(<< 1:1, 0:3, 1:4, 1:1, Len:7, MaskKey:32, Rest/bits >>) when Len < 126 ->
-    <<End:Len/binary, _/bits>> = Rest,
+    <<End:Len/binary, NextFrame/bits>> = Rest,
     Text = websocket_unmask(End, MaskKey, <<>>),
-    Text;
+    TextNext = websocket_data(NextFrame),
+	[Text, TextNext];
 websocket_data(_) ->
     <<>>. 
 websocket_unmask(<<>>, _, Unmasked) ->
