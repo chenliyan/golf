@@ -1,12 +1,14 @@
 -module(agr).
--export([init/1, start/0, upload/6,query/0,cims/3]).
+-export([init/1, start/0, upload/6,query/0,cims/3, yo/0]).
+-include_lib("stdlib/include/qlc.hrl"). 
 
+-record(test_info, {agr_id, cer_id, name, card_id,status,  inst, time}).
 -record(agr_info, {agr_id, cer_id, name, card_id,status,  county, inst, time}).
 -record(cer_info, {cer_id, name, status, time}).
 start() ->
 	mnesia:start(),
-	mnesia:create_table(agr_info, [{ram_copies, [node()]}, {attributes, record_info(fields, agr_info)}]),
-	mnesia:create_table(cer_info, [{ram_copies, [node()]}, {attributes, record_info(fields, cer_info)}]).
+	mnesia:create_table(agr_info, [{disc_copies, [node()]}, {attributes, record_info(fields, agr_info)}]),
+	mnesia:create_table(cer_info, [{disc_copies, [node()]}, {attributes, record_info(fields, cer_info)}]).
 init(From) ->
 	receive
 		{From, data, <<CerId:18/binary, ",",Name/binary>>} ->
@@ -21,7 +23,10 @@ init(From) ->
 			ok
 	end.
 upload(AgrId, CerId, Name, County, Inst, Option) ->
-	Tmp = #agr_info{agr_id = AgrId, cer_id = CerId, name = Name,
+	io:format("before pack~n"),
+	Tmp = #agr_info{agr_id = AgrId, 
+					cer_id = CerId, 
+					name = Name,
 					card_id = [], status = [],  
 					county = County, 
 					inst = Inst, 
@@ -58,7 +63,12 @@ cims(MyPid, CerId, Name) ->
 	end,
 	MyPid ! {agr, CerId, Ret}.
 query() ->
-	query(agr_info).
+	F = fun() ->
+		Q = qlc:q([[X#agr_info.agr_id, X#agr_info.cer_id, X#agr_info.card_id] || X <- mnesia:table(agr_info), X#agr_info.card_id > []]),
+		qlc:e(Q)
+	end,
+	{_, Ret} = mnesia:transaction(F),
+	Ret.
 query(Tab) ->
 	lists:flatmap(  
 		fun(Key) ->  
@@ -82,17 +92,8 @@ delimeter(T, Acc) ->
 	
 	
 yo() ->
-	F = fun() ->
-
-MatchHead = #agr_info{ _ = '_' },
-
-Guard = [],
-
-Result = ['$_'],
-
-mnesia:select(y_account, [{MatchHead, Guard, Result}])
-
-end,
-
-mnesia:transaction(F).
+	
+	mnesia:start(),
+	
+	mnesia:dirty_all_keys(cer_info).
 	
