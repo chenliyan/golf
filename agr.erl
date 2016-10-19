@@ -1,5 +1,5 @@
 -module(agr).
--export([init/1, start/0, apply/6,reapply/6,query/1,cims/3, yo/0]).
+-export([init/1, start/0, apply/6,reapply/6,query/0, query_on/3,cims/3, yo/0, update_card/3, update_status/2]).
 -include_lib("stdlib/include/qlc.hrl"). 
 
 -record(agr_info, {ssn, cer, name, addr, card, status, county, inst, time}).
@@ -81,6 +81,43 @@ cims(MyPid, CerId, Name) ->
 			cer_dismatch			
 	end,
 	MyPid ! {agr, CerId, Ret}.
+update_card(Ssn, Cer, Card) ->
+	F = fun() ->
+			Old = mnesia:read(agr_info, Ssn),
+			case Old of
+				[] ->
+					noexist;
+				[Tmp] ->
+					case Tmp#agr_info.cer == Cer of
+						true ->
+							New = Tmp#agr_info{ssn = Ssn},
+							mnesia:write(New),ok;
+						false ->
+							cer_dismatch
+					end
+			end
+	    end,
+	{_, Ret} = mnesia:transaction(F),
+	Ret.
+update_status(Ssn, Status) ->
+	F = fun() ->
+			Old = mnesia:read(agr_info, Ssn),
+			case Old of
+				[] ->
+					noexist;
+				[Tmp] ->
+					case Tmp#agr_info.card == undefined
+                      orelse Tmp#agr_info.card == fail	of
+						false ->
+							New = Tmp#agr_info{ssn = Ssn},
+							mnesia:write(New),ok;
+						true ->
+							card_noexist
+					end
+			end
+	    end,
+	{_, Ret} = mnesia:transaction(F),
+	Ret.
 query(Ssn) ->
 	F = fun() ->
 		Q = qlc:q([[X#agr_info.ssn, 
@@ -95,11 +132,47 @@ query(Ssn) ->
 
 query() ->
 	F = fun() ->
-		Q = qlc:q([[X#agr_info.ssn, X#agr_info.cer, X#agr_info.card] || X <- mnesia:table(agr_info), X#agr_info.card > []]),
-		qlc:e(Q)
+		Q = qlc:q([[X#agr_info.ssn, X#agr_info.cer, X#agr_info.card] || X <- mnesia:table(agr_info)]),
+		QC = qlc:cursor(Q),
+		Ret = qlc:next_answers(QC, 2),
+		qlc:delete_cursor(QC),
+		Ret
 	end,
-	{_, Ret} = mnesia:transaction(F),
-	Ret.
+	mnesia:transaction(F).
+
+query_on(County, Card, Status) ->
+	Q = qlc:q([X || X <- mnesia:table(agr_info)]),
+	case Card of
+		card_empty ->
+			Q2 = qlc:q([Y || Y <- Q, Y#agr_info.card == undefined]);
+		fail ->
+			Q2 = qlc:q([Y || Y <- Q, Y#agr_info.card == fail]);
+		_  ->
+			Q2 = qlc:q([Y || Y <- Q, Y#agr_info.card /= fail andalso Y#agr_info.card /= undefined])
+	end,
+	case Status of
+		success ->
+			Q3 = qlc:q([Z || Z <- Q2, Z#agr_info.status == success]);
+		fail ->
+			Q3 = qlc:q([Z || Z <- Q2, Z#agr_info.status == fail]);
+		_ ->
+			Q3 = Q2
+	end,
+	case County of
+		[] ->
+			Q4 = Q3;
+		_ ->
+			Q4 = qlc:q([W || W <- Q3, W#agr_info.county == County])
+	end,
+	
+	Q5 = qlc:q([Y ||Y <- Q4]),
+	F = fun() ->
+		QC = qlc:cursor(Q5),
+		Ret = qlc:next_answers(QC, 1000),
+		qlc:delete_cursor(QC),
+		Ret
+	end,
+	mnesia:transaction(F).
 query(Tab, NotReady) ->
 	lists:flatmap(  
 		fun(Key) ->  

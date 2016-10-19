@@ -6,6 +6,7 @@ upfile:<input type="file" id="myfile" multiple />
 <button onclick="check()">check</button>
 <button onclick="apply()">apply</button>
 <button onclick="reapp()">reapp</button>
+<button onclick="query()">query</button>
 <table id="main"></table>
 </body>
 <script>
@@ -66,10 +67,8 @@ function onMessage(m){
 		console.log("unknown data.");
 	}
 };
-function test(){
-	for (i = 0; i < 10; i ++){
-		ws.send(i);
-	}
+function query(){
+	ws.send("query");
 };
 function onResp(m){
 	key = m.shift();

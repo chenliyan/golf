@@ -14,7 +14,7 @@ login(H) ->
 			loop(H, Who, AgrCer, CerAgr);
 		{H, data, <<"admin", _/binary>>} ->
 			H ! {self(), data, "admin mode"},
-			admin(H);
+			adm:loop(H);
 		{H, data, Number} ->
 			H ! {self(), data, Number},
 			login(H);
