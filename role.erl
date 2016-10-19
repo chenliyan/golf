@@ -1,92 +1,123 @@
 -module(role).
 -export([init/1]).
-init(Ws) ->
-	login(Ws).
-login(Ws) ->
+-include_lib("stdlib/include/qlc.hrl"). 
+
+init(H) ->
+	login(H).
+login(H) ->
 	receive
-		{Ws, data, <<"login",Who/binary>>} ->
-			io:format("role.create.ets.[~p]~n", [self()]),
-			Ws ! {self(), data, "login success."},
+		{H, data, <<"login",Who/binary>>} ->
+			%%io:format("role.create.ets.[~p]~n", [self()]),
+			H ! {self(), data, "login success."},
 			CerAgr = ets:new(cer_agr, [set]),
 			AgrCer = ets:new(agr_cer, [set]),
-			loop(Ws, Who, AgrCer, CerAgr);
-		{Ws, data, <<"admin", Admin/binary>>} ->
-			admin(Ws);
-		{Ws, data, Number} ->
-			Ws ! {self(), data, Number},
-			login(Ws);
-		{Ws, close} ->
-			io:format("role.notlogined.gohome.[~p]~n", [self()]),
+			loop(H, Who, AgrCer, CerAgr);
+		{H, data, <<"admin", _/binary>>} ->
+			H ! {self(), data, "admin mode"},
+			admin(H);
+		{H, data, Number} ->
+			H ! {self(), data, Number},
+			login(H);
+		{H, close} ->
+			%%io:format("role.notlogined.gohome.[~p]~n", [self()]),
 			ok;
 		_Any ->
-			io:format("role.gohome.[~p]~n", [self()]),
-			io:format("role.unrecog~w~n", [_Any])		
+			io:format("role.unrecog~p ~p~n", [self(), _Any])		
 	end.
-loop(Ws, Who, AgrCer, CerAgr) ->
+loop(H, W, A, C) ->
 	receive
-		{Ws, close} ->
-			io:format("role.gohome[~p]~n", [self()]),
+		{H, close} ->
+			%%io:format("role.gohome[~p]~n", [self()]),
 			ok;
-		{Ws, data, <<Method:5/binary, ":", AgrId:13/binary,",",CerId:18/binary, ",", Name/binary>>} ->
-			io:format("Name is ~p~n", [Name]),
-			case Method of
-				<<"check">> ->
-					loop_check_req(Ws, Who, AgrCer, CerAgr, Method, AgrId, CerId, Name);
-				<<"uplod">> ->
-					loop_check_req(Ws, Who, AgrCer, CerAgr, Method, AgrId, CerId, Name);
+		{H, data, <<Method:5/binary,":", BinPeport/binary>>} ->
+			Tokens = string:tokens(binary_to_list(BinPeport), ","),
+			case length(Tokens) of
+				4 ->
+					loop_check_req(H, W, A, C, Method, Tokens);
 				_ ->
-					Ws ! {self(), data, <<"unrecog methodd">>},
-					loop(Ws, Who, AgrCer, CerAgr)					
+					H ! {self(), data, "info: error."},
+					loop(H, W, A, C)
 			end;
-		{Ws, data, Unknown} ->
+		{H, data, Unknown} ->
 			io:format("role.get~w~n", [Unknown]),
-			loop(Ws, Who, AgrCer, CerAgr);
-		{agr, CerId, Ret} ->
-			loop_check_res(Ws, Who, AgrCer, CerAgr, CerId, Ret);
+			loop(H, W, A, C);
+		{agr, Cer, Ret} ->
+			loop_check_res(H, W, A, C, Cer, Ret);
 		_Any ->
-			io:format("role.gohome[~p]~n", [self()]),
 			io:format("role.unknown:~p~n", [_Any])
 	end.
 	
-loop_check_req(Ws, Who, AgrCer, CerAgr, Method, AgrId, CerId, Name) ->
-	io:format("insert, ~p, ~p~n", [AgrId, CerId]),
-	ets:insert(AgrCer, {AgrId, Method, CerId, Name}),
-	ets:insert(CerAgr, {CerId, AgrId}),
-	spawn(agr, cims, [self(), CerId, Name]),
-	loop(Ws, Who, AgrCer, CerAgr).
+loop_check_req(H, W, A, C, Method, Report) ->
+	[Ssn, Cer, Name, Addr] = Report,
+	Ret = ets:lookup(A, Ssn) ++ ets:lookup(C, Cer),
+	io:format("que.~p~n", [Ret]),
+	case  Ret of
+		[] ->
+			io:format("ins,~p ~p~n", [Ssn, Cer]),
+			ets:insert(A, {Ssn, Method, Cer, Name, Addr}),
+			ets:insert(C, {Cer, Ssn}),
+			spawn(agr, cims, [self(), Cer, Name]);
+		_ ->
+			ok
+	end,
+	loop(H, W, A, C).
 	
-loop_check_res(Ws, Who, AgrCer, CerAgr, CerId, Ret) ->
-	io:format("take, ~p~n",  [CerId]),
-	[{_, AgrId}] = ets:take(CerAgr, CerId),
-	io:format("take, ~p~n", [AgrId]),
-	[{_, Method, _, Name}] = ets:take(AgrCer, AgrId),
-	io:format("check.res.AgrId is ~p, Method is ~p, Name is omit~n", [AgrId, Method]),
+loop_check_res(H, W, A, C, Cer, Ret) ->
+	io:format("tak, ~p~n", [Cer]),
+	[{_, Ssn}] = ets:take(C, Cer),
+	io:format("ssn ~p~n", [Ssn]),
+	[{_, Method, _, Name, Addr}] = ets:take(A, Ssn),
 	if
 		Ret == cer_noexist ->
-			io:format("branch 1~n"),
-			Ws ! {self(), data, <<"resp:", AgrId/binary, "cer.nomatch">>},
-			loop(Ws, Who, AgrCer, CerAgr);
+			%%io:format("branch 1~n"),
+			H ! {self(), data, "resp," ++ Ssn ++ ",cer.noexist"},
+			loop(H, W, A, C);
+		Ret == cer_dismatch ->
+			H ! {self(), data, "resp," ++ Ssn ++ ",cer.nomatch"};			
 		Method == <<"check">> ->
-			Ws ! {self(), data, <<"resp:", AgrId/binary, "cer check ok">>},
-			loop(Ws, Who, AgrCer, CerAgr);
-		Method == <<"uplod">> ->
-			io:format("branch 2~n"),
-			loop_upload(Ws, Who, AgrCer, CerAgr, AgrId, CerId, Name, [], [], []);
+			H ! {self(), data, "resp," ++ Ssn ++ ",cer check ok"},
+			loop(H, W, A, C);
+		Method == <<"apply">> ->
+			loop_apply(H, W, A, C, Ssn, Cer, Name, Addr);
+		Method == <<"reapp">> ->
+			loop_reapp(H, W, A, C, Ssn, Cer, Name, Addr);
 		true ->
-			io:format("branch 3~n"),
-			loop(Ws, Who, AgrCer, CerAgr)
+			%%io:format("unknown method~n"),
+			loop(H, W, A, C)
 	end.
 
-loop_upload(Ws, Who, AgrCer, CerAgr, AgrId, CerId, Name, County, Inst, Option) ->
-	Ret = agr:upload(AgrId, CerId, Name, County, Inst, Option),
-	Ws ! {self(), data, <<"resp:", AgrId/binary>>},
-	loop(Ws, Who, AgrCer, CerAgr).
+loop_apply(H, W, A, C, Ssn, Cer, Name,Addr) ->
+	{atomic, Ret} = agr:apply(Ssn, Cer, Name, Addr, [], []),
+	case Ret of
+		existed ->
+			Out = "existed";
+		ok ->
+			Out = "app ok"
+	end,
+	H ! {self(), data, "resp," ++ Ssn ++"," ++ Out},
+	loop(H, W, A, C).
 	
-admin(Ws) ->
+loop_reapp(H, W, A, C, Ssn, Cer, Name, Addr) ->
+	{atomic, Ret} = agr:reapply(Ssn, Cer, Name, Addr, [], []),
+	case Ret of
+		noexist ->
+			Out = "noexist";
+		card_empty ->
+			Out = "card_empty";
+		ok ->
+			Out = "app ok"
+	end,
+	H ! {self(), data, "resp," ++ Ssn ++ "," ++ Out},
+	loop(H, W, A, C).
+	
+admin(H) ->
 	receive
-		{Ws, data, <<"q.rpt", Report/binary>>} ->
-			Ws ! {self(), data, <<"report", Report/binary>>},
-			admin(Ws);
-		{Ws, data, _Any} ->
-			admin(Ws)
+		{H, data, <<"query">>} ->			
+			Ret = agr:query(),
+			[H ! {self(), data, <<"rest,", AgrId/binary, ",", CerId/binary, ",", Name/binary>> } || [AgrId, CerId, Name] <- Ret],
+			admin(H);
+		{H, data, _Any} ->
+			%%io:format("ill~p~n", [_Any]),
+			H ! {self(), data, <<"illeageal data">>},
+			admin(H)
 	end.

@@ -3,13 +3,13 @@
 status:<text id="status"></text><p>
 upfile:<input type="file" id="myfile" multiple />
 <button onclick="login()">login</button>
-<button onclick="upload()">upload</button>
 <button onclick="check()">check</button>
-<button onclick="test()">test</button>
+<button onclick="apply()">apply</button>
+<button onclick="reapp()">reapp</button>
 <table id="main"></table>
 </body>
 <script>
-var ws = new WebSocket("ws://127.0.0.1:8001/websocket");
+var ws = new WebSocket("ws://127.0.0.1:8010/websocket");
 var info = document.getElementById('status');
 var tabl = document.getElementById('main');
 var lines;
@@ -27,12 +27,10 @@ document.getElementById('myfile').addEventListener('change', function(){
 		var all_agr_id = new Array();
 		var all_cer_id = new Array();
 		header = tabl.insertRow();
-		agr_id = header.insertCell();
-		cer_id = header.insertCell();
-		cer_name = header.insertCell();
-		agr_id.innerHTML = "agr_id";
-		cer_id.innerHTML = "cer_id";
-		cer_name.innerHTML = "cer_name";
+		header.insertCell().innerHTML = "ssn";
+		header.insertCell().innerHTML = "nam";
+		header.insertCell().innerHTML = "cer";
+		header.insertCell().innerHTML = "add";
 		content = e.target.result;
 		lines = content.split("\n");
 		while (lines.length > 0){
@@ -40,22 +38,15 @@ document.getElementById('myfile').addEventListener('change', function(){
 			if (line.length == 0){
 				continue;
 			}
-			colums = line.split(",");
-			role = tabl.insertRow();
-			role.id = colums[0];
+			colums = line.split("\t");
 			if (colums.length == 0){
 				continue;
 			}
-			agr_id = colums.shift();
-			all_agr_id.push(agr_id);
-			cell = role.insertCell().innerHTML = agr_id;
-			
-			cer_id = colums.shift();
-			all_agr_id.push(cer_id);
-			cell = role.insertCell().innerHTML = cer_id;
-			
-			cer_name = colums.shift();
-			cell = role.insertCell().innerHTML = cer_name;
+			role = tabl.insertRow();
+			role.insertCell().innerHTML = role.id = colums.shift();
+			role.insertCell().innerHTML = colums.shift();
+			role.insertCell().innerHTML = colums.shift();
+			role.insertCell().innerHTML = colums.shift();
 		}
 		check_unique(all_agr_id);
 		check_unique(all_cer_id);
@@ -84,8 +75,9 @@ function onResp(m){
 	key = m.shift();
 	rst = m.shift();
 	role = document.getElementById(key);
-	agrId = role.insertCell();
-	agrId.innerHTML = rst;
+	if (null == role) return;
+	if (null == role.cells[4]) role.insertCell();
+	role.cells[4].innerHTML = rst;
 };
 function onRest(m){
 	row = tabl.insertRow();
@@ -94,17 +86,26 @@ function onRest(m){
 	row.insertCell().innerHTML = m.shift();
 	row.insertCell().innerHTML = m.shift();
 };
-function upload(){
+function apply(){
+	command("apply");
+};
+function reapp(){
+	command("reapp");
+};
+function command(cmd){
 	if (cursor == null){
 		cursor = tabl.rows[1];
 	}
 	while (cursor != null){
-		if (ws.bufferedAmount > 0){
-				setTimeout(upload, 50);
+		if (ws.bufferedAmount > 8196){
+				setTimeout(cmd, 10);
 				console.log("busy, wait.");
 				return;
 		}
-		ws.send("uplod:" + cursor.cells[0].innerHTML + "," + cursor.cells[1].innerHTML + "," + cursor.cells[2].innerHTML);
+		ws.send(cmd +":" + cursor.cells[0].innerHTML
+		           + "," + cursor.cells[2].innerHTML
+				   + "," + cursor.cells[1].innerHTML
+				   + "," + cursor.cells[3].innerHTML);
 		cursor = cursor.nextSibling;
 	}
 };
@@ -116,12 +117,15 @@ function check(){
 		cursor = tabl.rows[1];
 	}
 	while (cursor != null){
-		if (ws.bufferedAmount > 0){
-				setTimeout(check, 50);
+		if (ws.bufferedAmount > 8192){
+				setTimeout(check, 5);
 				console.log("busy, wait.");
 				return;
 		}
-		ws.send("check:" + cursor.cells[0].innerHTML + "," + cursor.cells[1].innerHTML + "," + cursor.cells[2].innerHTML);
+		ws.send("check:" + cursor.cells[0].innerHTML
+		           + "," + cursor.cells[2].innerHTML
+				   + "," + cursor.cells[1].innerHTML
+				   + "," + cursor.cells[3].innerHTML);
 		cursor = cursor.nextSibling;
 	}
 };

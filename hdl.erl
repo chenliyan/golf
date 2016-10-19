@@ -39,7 +39,7 @@ loop(S, P, Acc) ->
 			loop(S, P, Acc)
 	end.
 loop_parse(S, P, Head) when byte_size(Head) < 5 ->
-	io:format("len[~p], next round~n", [byte_size(Head)]),
+	%%io:format("len[~p], next round~n", [byte_size(Head)]),
 	loop(S, P, Head);
 loop_parse(S, P, Head) ->
 	io:format("len->[~p]~n", [byte_size(Head)]),
@@ -53,7 +53,7 @@ loop_parse(S, P, Head) ->
 			AllLen = Len,
 			MaskRest = ExtRest
 	end,
-	io:format("wslen[~p]~n", [Len]),
+	%%io:format("wslen[~p]~n", [Len]),
 	<<MaskKey:32, Rest/bits>> = MaskRest,
 	ActLen = iolist_size(Rest),
 	if 
@@ -64,8 +64,7 @@ loop_parse(S, P, Head) ->
 			inet:setopts(S, [{active,once}]),
 			<<Pay:AllLen/binary, NextHead/binary >> = Rest,
 			Text = websocket_unmask(Pay, MaskKey, <<>>),
-			<<Cmd:6/binary,Key:13/binary, _/binary>> = Text,
-			send_data(S, <<"resp,",Key/binary,",echo">>),
+			P ! {self(), data, Text},
 			loop_parse(S, P, NextHead)
 	end.
 

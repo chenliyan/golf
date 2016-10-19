@@ -1,10 +1,9 @@
 -module(agr).
--export([init/1, start/0, upload/6,query/0,cims/3, yo/0]).
+-export([init/1, start/0, apply/6,reapply/6,query/1,cims/3, yo/0]).
 -include_lib("stdlib/include/qlc.hrl"). 
 
--record(test_info, {agr_id, cer_id, name, card_id,status,  inst, time}).
--record(agr_info, {agr_id, cer_id, name, card_id,status,  county, inst, time}).
--record(cer_info, {cer_id, name, status, time}).
+-record(agr_info, {ssn, cer, name, addr, card, status, county, inst, time}).
+-record(cer_info, {cer, name, status, time}).
 start() ->
 	mnesia:start(),
 	mnesia:create_table(agr_info, [{disc_copies, [node()]}, {attributes, record_info(fields, agr_info)}]),
@@ -22,35 +21,55 @@ init(From) ->
 			init(From),
 			ok
 	end.
-upload(AgrId, CerId, Name, County, Inst, Option) ->
-	io:format("before pack~n"),
-	Tmp = #agr_info{agr_id = AgrId, 
-					cer_id = CerId, 
+apply(Ssn, Cer, Name, Addr, County, Inst) ->
+%%ssn, cer, name, addr, card, status, county, inst, time
+	Tmp = #agr_info{ssn = Ssn, 
+					cer = Cer, 
 					name = Name,
-					card_id = [], status = [],  
-					county = County, 
-					inst = Inst, 
-					time = calendar:now_to_local_time(erlang:now())},
-	case Option of 
-		<<"force">> ->
-			mnesia:dirty_write(Tmp);
-		_ ->
-			upload(AgrId, Tmp)
-	end.
-upload(AgrId, Tmp) ->
-	Ori = mnesia:dirty_read(agr_info, AgrId),
-	case Ori of
-		[] ->			
-			mnesia:dirty_write(Tmp),
-			ok;
-		_ ->
-			existed
-	end.
+					addr = Addr,
+					time = calendar:now_to_local_time(erlang:now())},	
+	F = fun() ->
+			Old = mnesia:read(agr_info, Ssn),
+			case Old of 
+				[] ->
+					mnesia:write(Tmp),
+					ok;
+				_ ->
+					existed
+			end
+		end,
+	mnesia:transaction(F).
+	
+
+reapply(Ssn, Cer, Name, Addr, County, Inst) ->
+	Tmp = #agr_info{ssn = Ssn, 
+					cer = Cer, 
+					name = Name,
+					addr = Addr,
+					
+					time = calendar:now_to_local_time(erlang:now())},	
+	F = fun() ->
+			Old = mnesia:read(agr_info, Ssn),
+			case Old of 
+				[] ->
+					noexist;
+				_ ->
+					[{agr_info, _, _, _, _, Card, _, _, _, _}] = Old,
+					case Card of
+						undefined ->
+							card_empty;
+						_ ->
+							mnesia:write(Tmp),
+							ok
+					end
+			end
+		end,
+	mnesia:transaction(F).
 cims(MyPid, CerId, Name) ->
 	Ret = 
 	case mnesia:dirty_read(cer_info, CerId) of
 		[] ->
-			Cer = #cer_info{cer_id = CerId, 
+			Cer = #cer_info{cer = CerId, 
 			                name = Name, 
 							status = <<"ok">>, 
 							time = calendar:now_to_local_time(erlang:now())},	
@@ -62,14 +81,26 @@ cims(MyPid, CerId, Name) ->
 			cer_dismatch			
 	end,
 	MyPid ! {agr, CerId, Ret}.
-query() ->
+query(Ssn) ->
 	F = fun() ->
-		Q = qlc:q([[X#agr_info.agr_id, X#agr_info.cer_id, X#agr_info.card_id] || X <- mnesia:table(agr_info), X#agr_info.card_id > []]),
+		Q = qlc:q([[X#agr_info.ssn, 
+		            X#agr_info.cer, 
+					X#agr_info.name,
+					X#agr_info.addr,
+					X#agr_info.card] || X <- mnesia:table(agr_info), X#agr_info.ssn == Ssn]),
 		qlc:e(Q)
 	end,
 	{_, Ret} = mnesia:transaction(F),
 	Ret.
-query(Tab) ->
+
+query() ->
+	F = fun() ->
+		Q = qlc:q([[X#agr_info.ssn, X#agr_info.cer, X#agr_info.card] || X <- mnesia:table(agr_info), X#agr_info.card > []]),
+		qlc:e(Q)
+	end,
+	{_, Ret} = mnesia:transaction(F),
+	Ret.
+query(Tab, NotReady) ->
 	lists:flatmap(  
 		fun(Key) ->  
 			[Result] = mnesia:dirty_read(Tab, Key),
